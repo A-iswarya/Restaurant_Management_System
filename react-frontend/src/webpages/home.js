@@ -1,43 +1,60 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import {useNavigate} from 'react-router-dom';
+import {GET_RESTAURANTS} from './apis/api';
 
+import '../styles.scss';
 const Home = () => {
-  const containerStyle = {
-    textAlign: "center",
-    backgroundColor: "#64B5F6", // Lighter blue background color
-    color: "white", // White text color
-    padding: "20px",
-    fontFamily: "Arial, sans-serif", // Specify a font
+  const [selectedOption, setSelectedOption] = useState('');
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [restaurants, setRestaurants] = useState([]);
+
+  useEffect(() => {
+    fetch(GET_RESTAURANTS)
+    .then(res => res.json())
+    .then( (data) => {
+                setIsLoaded(true);
+                if (Array.isArray(data) && data.length > 0) {
+                  setRestaurants(data);
+                  setSelectedOption(data[0].id);
+                } else {
+                  setError({ message: 'No restaurants found.' });
+                }
+            },
+            (error) => {
+                setIsLoaded(true);
+                setError(error);
+            }
+    )
+  }, []);
+
+  const navigate = useNavigate();
+  const navigateToLogin = () => {
+    navigate(`${selectedOption}/login`);
   };
 
-  const buttonStyle = {
-    backgroundColor: "#1976D2",
-    color: "white",
-    padding: "8px 18px",
-    border: "none",
-    cursor: "pointer",
-    fontSize: "13px",
-    borderRadius: "5px", // Rounded corners
-    margin: "10px", // Add some margin
-  };
+  const handleSelect = (e)=>{
+    setSelectedOption(e.target.value);
+  }
 
-  const selectStyle = {
-    padding: "10px",
-    fontSize: "16px",
-    borderRadius: "5px",
-    width: "40%"
-  };
-
-  return (
-    <div style={containerStyle}>
-      <h1>DineEase</h1>
-      <select style={selectStyle}>
-        <option value="someOption">Some option</option>
-        <option value="otherOption">Other option</option>
-      </select>
-      <br /><br />
-      <button style={buttonStyle} onClick={() => alert('hey')}>Submit</button>
-    </div>
-  );
+  if (error) {
+    return(<div className="home"><h2 className="error">Error: {error.message}</h2></div>);
+  } else if (!isLoaded) {
+      return <div className="home"><h2 className="loading">Loading...</h2></div>;
+  } else {
+    return (
+      <div className="home">
+        <h1>DineEase</h1>
+        <select className="select" value={selectedOption} onChange={handleSelect}>
+          {restaurants.map(restaurant => (
+            <option value={restaurant.id}>{restaurant.name}</option>
+          ))}
+        </select>
+        <br /><br />
+        <button className="submitButton" onClick={() => navigateToLogin()}>Submit</button>
+      </div>
+    );
+  }
 };
 
 export default Home;
