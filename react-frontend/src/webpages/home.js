@@ -47,7 +47,7 @@ const Home = () => {
         <h1>DineEase</h1>
         <select className="select" value={selectedOption} onChange={handleSelect}>
           {restaurants.map(restaurant => (
-            <option value={restaurant.id}>{restaurant.name}</option>
+            <option key={restaurant.id} value={restaurant.id}>{restaurant.name}</option>
           ))}
         </select>
         <br /><br />
