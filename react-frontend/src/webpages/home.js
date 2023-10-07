@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {useNavigate} from 'react-router-dom';
-import {GET_RESTAURANTS} from './apis/api';
+import { useNavigate, Link } from 'react-router-dom';
+import { GET_RESTAURANTS } from './apis/api';
+import { IoRestaurantSharp } from "react-icons/io5";
+
 
 import '../styles.scss';
 const Home = () => {
@@ -52,6 +54,10 @@ const Home = () => {
         </select>
         <br /><br />
         <button className="submitButton" onClick={() => navigateToLogin()}>Submit</button>
+        <br/><br/>
+        <Link to={'/create'}>
+          <font className = 'createButton'>Add Your Restaurant <IoRestaurantSharp /></font>
+        </Link>
       </div>
     );
   }
