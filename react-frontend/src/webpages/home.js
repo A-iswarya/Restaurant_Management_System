@@ -28,7 +28,7 @@ const Home = () => {
 
   const navigate = useNavigate();
   const navigateToLogin = () => {
-    navigate(`${selectedOption}/login`);
+    navigate(`/login?restaurant_id=${selectedOption}`);
   };
 
   const handleSelect = (e) => {
