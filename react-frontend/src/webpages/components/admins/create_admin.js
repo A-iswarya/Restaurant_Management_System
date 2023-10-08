@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GET_ADMINS } from "../../apis/api";
+import { POST_ADMIN } from "../../apis/api";
 import { GetRestaurantId } from "../../helper";
 
 const CreateAdmin = () => {
+  const responseId = useRef(GetRestaurantId());
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
-    name: "",
     username: "",
     password: "",
     confirmPassword: "",
     email: "",
     phoneNumber: "",
-    restaurant_id: GetRestaurantId(),
+    restaurant_id: responseId.current,
   });
 
   const validateInputes = () => {
@@ -34,7 +34,7 @@ const CreateAdmin = () => {
       return;
     }
     try {
-      const response = await fetch(GET_ADMINS, {
+      const response = await fetch(POST_ADMIN, {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
@@ -42,9 +42,11 @@ const CreateAdmin = () => {
         },
       });
       if (response.ok) {
-        //session
-        navigate("/dashboard");
-      } else setError("Admin Creation Failed!");
+        const responseData = await response.json();
+        navigate(
+          `/dashboard?restaurant_id=${responseId.current}&admin_id=${responseData.data.id}`
+        );
+      } else setError("Admin Creation Failed");
     } catch {
       setError("Something went wrong!");
     }
@@ -62,13 +64,13 @@ const CreateAdmin = () => {
       {error && <div className="error">Error: {error}</div>}
       <form onSubmit={handleSubmit}>
         <label>
-          Name:<span>*</span>{" "}
+          Username: <span>*</span>
         </label>
         <input
-          value={formData.name}
+          value={formData.username}
           type="text"
           onChange={handleChange}
-          name="name"
+          name="username"
           required
         />
         <br />
@@ -86,17 +88,6 @@ const CreateAdmin = () => {
           type="text"
           onChange={handleChange}
           name="phoneNumber"
-        />
-        <br />
-        <label>
-          Username: <span>*</span>
-        </label>
-        <input
-          value={formData.username}
-          type="text"
-          onChange={handleChange}
-          name="username"
-          required
         />
         <br />
         <label>

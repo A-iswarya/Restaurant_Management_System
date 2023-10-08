@@ -14,10 +14,10 @@ class Api::V1::AdminsController < ApplicationController
       if @admin.save
         render json: { message: 'Admin created successfully', data: @admin }
       else
-        render json: { error: 'Admin creation failed' }, status: 400
+        render json: { error: 'Admin creation failed' }, status: :unauthorized
       end
     rescue => e
-      render json: { error: e.message }, status: 400
+      render json: { error: e.message }, status: :unauthorized
     end
 
     def update
@@ -25,10 +25,10 @@ class Api::V1::AdminsController < ApplicationController
         @admin.update(admin_params)
         render json:  { message: 'Admin updated successfully', data: @admin }
       else
-        render json: { error: 'Admin is not found' }, status: 400
+        render json: { error: 'Admin is not found' }, status: :unauthorized
       end
     rescue => e
-      render json: { error: e.message }, status: 400
+      render json: { error: e.message }, status: :unauthorized
     end
 
     def destroy
@@ -36,16 +36,16 @@ class Api::V1::AdminsController < ApplicationController
         @admin.destroy
         render json:  { message: 'Admin destroyed successfully' }
       else
-        render json: { error: 'Admin is not found' }, status: 400
+        render json: { error: 'Admin is not found' }, status: :unauthorized
       end
     rescue => e
-      render json: { error: e.message }, status: 400
+      render json: { error: e.message }, status: :unauthorized
     end
 
     private
 
     def admin_params
-      params.require(:admin).permit(:name, :username, :email, :phone_number, :password, :restaurant_id)
+      params.require(:admin).permit(:username, :email, :phone_number, :password, :restaurant_id)
     end
 
     def find_admin

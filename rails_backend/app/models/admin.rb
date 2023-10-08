@@ -4,10 +4,9 @@
 #
 #  id            :uuid             not null, primary key
 #  email         :string
-#  name          :string
-#  password      :string
+#  password      :string           not null
 #  phone_number  :string
-#  username      :string
+#  username      :string           not null
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  restaurant_id :uuid             not null
@@ -22,4 +21,5 @@
 #
 class Admin < ApplicationRecord
   belongs_to :restaurant
+  validates :username, presence: true, uniqueness: true
 end

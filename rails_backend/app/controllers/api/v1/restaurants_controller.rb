@@ -14,10 +14,10 @@ class Api::V1::RestaurantsController < ApplicationController
       if @restaurant.save
         render json: { message: 'Restaurant created successfully', data: @restaurant }
       else
-        render json: { error: 'Restaurant creation failed' }, status: 400
+        render json: { error: 'Restaurant creation failed' }, status: :unauthorized
       end
     rescue => e
-      render json: { error: e.message }, status: 400
+      render json: { error: e.message }, status: :unauthorized
     end
   
     def update
@@ -25,10 +25,10 @@ class Api::V1::RestaurantsController < ApplicationController
         @restaurant.update(restaurant_params)
         render json:  { message: 'Restaurant updated successfully', data: @restaurant }
       else
-        render json: { error: 'Restaurant is not found' }, status: 400
+        render json: { error: 'Restaurant is not found' }, status: :unauthorized
       end
     rescue => e
-      render json: { error: e.message }, status: 400
+      render json: { error: e.message }, status: :unauthorized
     end
 
     def destroy
@@ -36,10 +36,10 @@ class Api::V1::RestaurantsController < ApplicationController
         @restaurant.destroy
         render json:  { message: 'Restaurant destroyed successfully' }
       else
-        render json: { error: 'Restaurant is not found' }, status: 400
+        render json: { error: 'Restaurant is not found' }, status: :unauthorized
       end
     rescue => e
-      render json: { error: e.message }, status: 400
+      render json: { error: e.message }, status: :unauthorized
     end
     
     private

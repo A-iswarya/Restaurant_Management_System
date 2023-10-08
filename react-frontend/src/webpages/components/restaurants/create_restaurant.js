@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { GET_RESTAURANTS } from "../../apis/api";
+import { POST_RESTAURANT } from "../../apis/api";
 import { useNavigate } from "react-router-dom";
 
 const CreateRestaurant = () => {
@@ -26,7 +26,7 @@ const CreateRestaurant = () => {
       return;
     }
     try {
-      const response = await fetch(GET_RESTAURANTS, {
+      const response = await fetch(POST_RESTAURANT, {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
