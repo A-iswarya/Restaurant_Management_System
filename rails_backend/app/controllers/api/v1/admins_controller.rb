@@ -1,4 +1,5 @@
 class Api::V1::AdminsController < ApplicationController
+  skip_before_action :authenticate_user, only: [:create]
   before_action :find_admin, only: %i[show update destroy]
     def index
       @admins = Admin.all
@@ -14,7 +15,7 @@ class Api::V1::AdminsController < ApplicationController
       if @admin.save
         render json: { message: 'Admin created successfully', data: @admin }
       else
-        render json: { error: 'Admin creation failed' }, status: :unauthorized
+        render json: { error: @admin.errors.full_messages.join(', ') }, status: :unauthorized
       end
     rescue => e
       render json: { error: e.message }, status: :unauthorized

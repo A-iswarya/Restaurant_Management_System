@@ -2,14 +2,14 @@
 #
 # Table name: admins
 #
-#  id            :uuid             not null, primary key
-#  email         :string
-#  password      :string           not null
-#  phone_number  :string
-#  username      :string           not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  restaurant_id :uuid             not null
+#  id              :uuid             not null, primary key
+#  email           :string
+#  password_digest :string           not null
+#  phone_number    :string
+#  username        :string           not null
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  restaurant_id   :uuid             not null
 #
 # Indexes
 #
