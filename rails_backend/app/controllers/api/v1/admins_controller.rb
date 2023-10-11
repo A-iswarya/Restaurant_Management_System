@@ -13,7 +13,13 @@ class Api::V1::AdminsController < ApplicationController
     def create
       @admin = Admin.new(admin_params)
       if @admin.save
-        render json: { message: 'Admin created successfully', data: @admin }
+        token = jwt_encode(user_id: @admin.id, user_type: 'Admin' )
+        time = Time.now+24.hours.to_i
+        render json: { message: 'Admin created successfully',
+                       data: @admin,
+                       token: token,
+                       expiry_date: time.strftime("%m-%d-%Y %H:%M"),
+                       user_type: 'Admin'}
       else
         render json: { error: @admin.errors.full_messages.join(', ') }, status: :unauthorized
       end

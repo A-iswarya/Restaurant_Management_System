@@ -8,7 +8,7 @@ class ApplicationController < ActionController::API
     header = request.headers['Authorization']
     header = header.split(' ').last if header
     begin
-      @decoded = JwtToken.decode(header)
+      @decoded = jwt_decode(header)
       @current_user_type = @decoded[:user_type]
       @current_user = current_user_type.class.find(@decoded[:user_id])
     rescue ActiveRecord::RecordNotFound => e

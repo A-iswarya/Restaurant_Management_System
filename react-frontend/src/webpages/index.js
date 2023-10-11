@@ -4,6 +4,7 @@ import Home from "./home";
 import Login from "./login";
 import CreateRestaurant from "./components/restaurants/create_restaurant";
 import CreateAdmin from "./components/admins/create_admin";
+import Dashboard from "./components/Dashboard/dashboard";
 
 const Webpages = () => {
   return (
@@ -13,7 +14,7 @@ const Webpages = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/create" element={<CreateRestaurant />} />
         <Route path="/admin/create" element={<CreateAdmin />} />
-        <Route path="/dashboard" element={<CreateAdmin />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { POST_ADMIN } from "../../apis/api";
-import { GetRestaurantId } from "../../helper";
+import { GetRestaurantId, setItemWithExpiration } from "../../helper";
 
 const CreateAdmin = () => {
   const responseId = useRef(GetRestaurantId());
@@ -36,13 +36,24 @@ const CreateAdmin = () => {
     try {
       const response = await fetch(POST_ADMIN, {
         method: "POST",
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ admin: formData }),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
+          Authorization: localStorage.token,
         },
       });
       if (response.ok) {
         const responseData = await response.json();
+        localStorage.setItem("user", JSON.stringify(responseData.data));
+        localStorage.setItem(
+          "userType",
+          JSON.stringify(responseData.user_type)
+        );
+        setItemWithExpiration(
+          "token",
+          responseData.token,
+          responseData.expiry_date
+        );
         navigate(
           `/dashboard?restaurant_id=${responseId.current}&admin_id=${responseData.data.id}`
         );
