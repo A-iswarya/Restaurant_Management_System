@@ -3,12 +3,13 @@ class Api::V1::AuthenticationController < ApplicationController
 
   def login
     @user = params[:user_type].constantize.find_by_username(params[:username])
-    if @user.authenticate(params[:password])
-      token = jwt_encode(user_id: @user.id, user_type: params[:user_type] )
-      time = Time.now+24.hours.to_i
-      render json: { token: token,
-                     expiry_date: time.strftime("%m-%d-%Y %H:%M"),
-                     user: @user }
+    if @user.restaurant_id == params[:restaurant_id] && @user.authenticate(params[:password])
+        token = jwt_encode(user_id: @user.id, user_type: params[:user_type] )
+        time = Time.now+24.hours.to_i
+        render json: { token: token,
+                        expiry_date: time.strftime("%m-%d-%Y %H:%M"),
+                        data: @user,
+                        user_type: params[:user_type] }
     else
       render json: {error: 'Unauthorized'}, status: :unauthorized
     end

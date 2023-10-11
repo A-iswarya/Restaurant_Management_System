@@ -33,3 +33,9 @@ export const getItemWithExpiration = function (key) {
 
   return parsedItem.value;
 };
+
+export const loggingIn = (responseData) => {
+  localStorage.setItem("user", JSON.stringify(responseData.data));
+  localStorage.setItem("userType", JSON.stringify(responseData.user_type));
+  setItemWithExpiration("token", responseData.token, responseData.expiry_date);
+};

@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./home";
-import Login from "./login";
+import Login from "./components/login";
 import CreateRestaurant from "./components/restaurants/create_restaurant";
 import CreateAdmin from "./components/admins/create_admin";
 import Dashboard from "./components/Dashboard/dashboard";

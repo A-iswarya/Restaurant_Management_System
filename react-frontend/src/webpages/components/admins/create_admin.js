@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { POST_ADMIN } from "../../apis/api";
-import { GetRestaurantId, setItemWithExpiration } from "../../helper";
+import { GetRestaurantId, loggingIn } from "../../helper";
 
 const CreateAdmin = () => {
-  const responseId = useRef(GetRestaurantId());
+  const restaurantId = useRef(GetRestaurantId());
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
@@ -13,7 +13,7 @@ const CreateAdmin = () => {
     confirmPassword: "",
     email: "",
     phoneNumber: "",
-    restaurant_id: responseId.current,
+    restaurant_id: restaurantId.current,
   });
 
   const validateInputes = () => {
@@ -44,18 +44,9 @@ const CreateAdmin = () => {
       });
       if (response.ok) {
         const responseData = await response.json();
-        localStorage.setItem("user", JSON.stringify(responseData.data));
-        localStorage.setItem(
-          "userType",
-          JSON.stringify(responseData.user_type)
-        );
-        setItemWithExpiration(
-          "token",
-          responseData.token,
-          responseData.expiry_date
-        );
+        loggingIn(responseData);
         navigate(
-          `/dashboard?restaurant_id=${responseId.current}&admin_id=${responseData.data.id}`
+          `/dashboard?restaurant_id=${restaurantId.current}&admin_id=${responseData.data.id}`
         );
       } else setError("Admin Creation Failed");
     } catch {
@@ -72,7 +63,7 @@ const CreateAdmin = () => {
   return (
     <div className="addAdmin">
       <h1>Add Admin</h1>
-      {error && <div className="error">Error: {error}</div>}
+      {error && <div className="error">{error}</div>}
       <form onSubmit={handleSubmit}>
         <label>
           Username: <span>*</span>
