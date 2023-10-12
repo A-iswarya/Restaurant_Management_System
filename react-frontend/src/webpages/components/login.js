@@ -23,7 +23,6 @@ const Login = () => {
         body: JSON.stringify(formData),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
-          Authorization: localStorage.token,
         },
       });
       if (response.ok) {

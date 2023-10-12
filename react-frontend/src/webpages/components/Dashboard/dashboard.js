@@ -7,8 +7,6 @@ import Card from "../card";
 import Layout from "../layout";
 
 const Dashboard = () => {
-  const user =
-    localStorage.getItem("user") && JSON.parse(localStorage.getItem("user"));
   const userType =
     localStorage.getItem("userType") &&
     JSON.parse(localStorage.getItem("userType"));
@@ -47,7 +45,7 @@ const Dashboard = () => {
   else cards = [<h2 className="invalid-user">Invalid User!</h2>];
 
   return (
-    <Layout user={user} userType={userType}>
+    <Layout userType={userType}>
       {<div className="card-container">{cards}</div>}
     </Layout>
   );

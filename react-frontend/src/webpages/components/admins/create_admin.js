@@ -12,12 +12,12 @@ const CreateAdmin = () => {
     password: "",
     confirmPassword: "",
     email: "",
-    phoneNumber: "",
+    phone_number: "",
     restaurant_id: restaurantId.current,
   });
 
   const validateInputes = () => {
-    if (!/^[0-9]*$/.test(formData.phoneNumber)) {
+    if (!/^[0-9]*$/.test(formData.phone_number)) {
       setError("Invalid Phone Number");
       return false;
     }
@@ -39,7 +39,6 @@ const CreateAdmin = () => {
         body: JSON.stringify({ admin: formData }),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
-          Authorization: localStorage.token,
         },
       });
       if (response.ok) {
@@ -86,10 +85,10 @@ const CreateAdmin = () => {
         <br />
         <label>Phone Number: </label>
         <input
-          value={formData.phoneNumber}
+          value={formData.phone_number}
           type="text"
           onChange={handleChange}
-          name="phoneNumber"
+          name="phone_number"
         />
         <br />
         <label>

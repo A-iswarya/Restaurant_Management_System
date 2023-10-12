@@ -3,12 +3,13 @@ import { IoRestaurantOutline } from "react-icons/io5";
 import { BiLogOut } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
-const Layout = ({ user, userType, children }) => {
+const Layout = ({ userType, children }) => {
   const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem("user_id");
     localStorage.removeItem("userType");
     localStorage.removeItem("token");
+    localStorage.removeItem("expiry_date");
     navigate("/");
   };
   return (
@@ -18,7 +19,7 @@ const Layout = ({ user, userType, children }) => {
           DineEase
           <IoRestaurantOutline style={{ marginLeft: "20px" }} />
         </h1>
-        {user && userType && (
+        {userType && (
           <div className="user-info">
             <span className="user-type">{userType} |</span>
             <span className="edit-profile">Edit Profile |</span>
