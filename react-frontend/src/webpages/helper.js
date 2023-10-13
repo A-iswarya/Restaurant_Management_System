@@ -12,5 +12,11 @@ export const loggingIn = (responseData) => {
   localStorage.setItem("token", JSON.stringify(responseData.token));
 };
 
+export const loggingOut = (responseData) => {
+  localStorage.removeItem("user_id");
+  localStorage.removeItem("user_type");
+  localStorage.removeItem("token");
+};
+
 export const getLocalStorageValue = (key) =>
   localStorage.getItem(key) && JSON.parse(localStorage.getItem(key));

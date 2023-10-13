@@ -2,7 +2,7 @@ import React from "react";
 import { IoRestaurantOutline } from "react-icons/io5";
 import { BiLogOut } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
-import { getLocalStorageValue, GetRestaurantId } from "./helper";
+import { getLocalStorageValue, GetRestaurantId, loggingOut } from "./helper";
 
 const Layout = ({ children }) => {
   const userType = getLocalStorageValue("user_type");
@@ -10,9 +10,7 @@ const Layout = ({ children }) => {
   const navigate = useNavigate();
   const restaurantId = GetRestaurantId();
   const handleLogout = () => {
-    localStorage.removeItem("user_id");
-    localStorage.removeItem("user_type");
-    localStorage.removeItem("token");
+    loggingOut();
     navigate("/");
   };
 

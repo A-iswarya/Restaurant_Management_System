@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { POST_ADMIN, GET_SINGLE_ADMIN } from "../../apis/api";
 import { GetRestaurantId, loggingIn, getLocalStorageValue } from "../../helper";
 import { useNavigate } from "react-router-dom";
+import DeleteAdmin from "./delete_admin";
 
 const AdminForm = ({ edit }) => {
   const userId = getLocalStorageValue("user_id");
@@ -143,6 +144,7 @@ const AdminForm = ({ edit }) => {
         />
         <br />
         <button>{edit ? "EDIT" : "Create"}</button>
+        {edit && <DeleteAdmin userId={userId} />}
       </form>
     </div>
   );
