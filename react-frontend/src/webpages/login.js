@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import Layout from "./layout";
-import { loggingIn, GetRestaurantId } from "../helper";
-import { LOGIN } from "../apis/api";
+import { loggingIn, GetRestaurantId } from "./helper";
+import { LOGIN } from "./apis/api";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {

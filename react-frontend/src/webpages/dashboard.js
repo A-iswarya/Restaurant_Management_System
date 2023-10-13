@@ -3,13 +3,12 @@ import { TfiLayoutMenuV } from "react-icons/tfi";
 import { VscFeedback } from "react-icons/vsc";
 import { MdDining, MdOutlineBorderColor } from "react-icons/md";
 import { PiCookingPotBold } from "react-icons/pi";
-import Card from "../card";
-import Layout from "../layout";
+import { getLocalStorageValue } from "./helper";
+import Card from "./components/card";
+import Layout from "./layout";
 
 const Dashboard = () => {
-  const userType =
-    localStorage.getItem("user_type") &&
-    JSON.parse(localStorage.getItem("userType"));
+  const userType = getLocalStorageValue("user_type");
 
   let cards;
   if (userType === "Admin")
@@ -44,10 +43,6 @@ const Dashboard = () => {
     ];
   else cards = [<h2 className="invalid-user">Invalid User!</h2>];
 
-  return (
-    <Layout userType={userType}>
-      {<div className="card-container">{cards}</div>}
-    </Layout>
-  );
+  return <Layout>{<div className="card-container">{cards}</div>}</Layout>;
 };
 export default Dashboard;

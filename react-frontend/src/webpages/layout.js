@@ -2,16 +2,24 @@ import React from "react";
 import { IoRestaurantOutline } from "react-icons/io5";
 import { BiLogOut } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import { getLocalStorageValue, GetRestaurantId } from "./helper";
 
-const Layout = ({ userType, children }) => {
+const Layout = ({ children }) => {
+  const userType = getLocalStorageValue("user_type");
+  const userId = getLocalStorageValue("user_id");
   const navigate = useNavigate();
+  const restaurantId = GetRestaurantId();
   const handleLogout = () => {
     localStorage.removeItem("user_id");
     localStorage.removeItem("user_type");
     localStorage.removeItem("token");
-    localStorage.removeItem("expiry_time");
     navigate("/");
   };
+
+  const handleEditProfile = () => {
+    navigate(`/admin/${userId}/edit?restaurant_id=${restaurantId}`);
+  };
+
   return (
     <div className="dashboard">
       <div className="banner">
@@ -22,7 +30,9 @@ const Layout = ({ userType, children }) => {
         {userType && (
           <div className="user-info">
             <span className="user-type">{userType} |</span>
-            <span className="edit-profile">Edit Profile |</span>
+            <span className="edit-profile" onClick={handleEditProfile}>
+              Edit Profile |
+            </span>
             <span className="logout" onClick={handleLogout}>
               Logout
               <BiLogOut

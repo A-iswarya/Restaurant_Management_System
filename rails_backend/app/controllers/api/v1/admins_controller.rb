@@ -19,8 +19,7 @@ module Api
         @admin = Admin.new(admin_params)
         if @admin.save
           generate_token
-          render json: { message: 'Admin created successfully', data: @admin, token: @token,
-                         expiry_time: @expiry_time, user_type: 'Admin' }
+          render json: { message: 'Admin created successfully', data: @admin, token: @token, user_type: 'Admin' }
         else
           render json: { error: @admin.errors.full_messages.join(', ') }, status: :unauthorized
         end
@@ -61,8 +60,8 @@ module Api
       end
 
       def generate_token
-        @token = jwt_encode(user_id: @admin.id, user_type: 'Admin')
-        @expiry_time = (Time.now + 24.hours.to_i).strftime('%m-%d-%Y %H:%M')
+        expiry_time = (Time.now + 24.hours.to_i).strftime('%m-%d-%Y %H:%M')
+        @token = jwt_encode(user_id: @admin.id, user_type: 'Admin', expiry_time: expiry_time)
       end
     end
   end

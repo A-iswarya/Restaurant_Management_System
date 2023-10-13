@@ -22,8 +22,8 @@ module Api
       private
 
       def generate_token
-        @token = jwt_encode({ user_id: @user.id, user_type: @params[:user_type] })
-        @expiry_time = (Time.now + 24.hours.to_i).strftime('%m-%d-%Y %H:%M')
+        expiry_time = (Time.now + 24.hours.to_i).strftime('%m-%d-%Y %H:%M')
+        @token = jwt_encode({ user_id: @user.id, user_type: @params[:user_type], expiry_time: expiry_time })
       end
 
       def valid_login?
@@ -31,7 +31,7 @@ module Api
       end
 
       def render_successful_login
-        render json: { token: @token, expiry_time: @expiry_time, data: @user, user_type: @params[:user_type] }
+        render json: { token: @token, data: @user, user_type: @params[:user_type] }
       end
     end
   end
