@@ -7,9 +7,9 @@ const Layout = ({ userType, children }) => {
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("user_id");
-    localStorage.removeItem("userType");
+    localStorage.removeItem("user_type");
     localStorage.removeItem("token");
-    localStorage.removeItem("expiry_date");
+    localStorage.removeItem("expiry_time");
     navigate("/");
   };
   return (

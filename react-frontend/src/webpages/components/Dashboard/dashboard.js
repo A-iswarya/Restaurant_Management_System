@@ -8,7 +8,7 @@ import Layout from "../layout";
 
 const Dashboard = () => {
   const userType =
-    localStorage.getItem("userType") &&
+    localStorage.getItem("user_type") &&
     JSON.parse(localStorage.getItem("userType"));
 
   let cards;

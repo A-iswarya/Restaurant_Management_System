@@ -8,7 +8,7 @@ export const GetRestaurantId = function () {
 
 export const loggingIn = (responseData) => {
   localStorage.setItem("user_id", JSON.stringify(responseData.data.id));
-  localStorage.setItem("userType", JSON.stringify(responseData.user_type));
+  localStorage.setItem("user_type", JSON.stringify(responseData.user_type));
   localStorage.setItem("token", JSON.stringify(responseData.token));
-  localStorage.setItem("expiry_date", JSON.stringify(responseData.expiry_date));
+  localStorage.setItem("expiry_time", JSON.stringify(responseData.expiry_time));
 };
