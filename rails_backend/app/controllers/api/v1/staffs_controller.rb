@@ -53,7 +53,7 @@ module Api
       private
 
       def staff_params
-        params.require(:staff).permit(:name, :username, :email, :phone_number, :password, :designation, :restaurant_id)
+        params.permit(:name, :username, :email, :phone_number, :password, :designation, :restaurant_id)
       end
 
       def find_staff

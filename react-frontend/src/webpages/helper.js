@@ -1,9 +1,9 @@
 import { useLocation } from "react-router-dom";
 
-export const GetRestaurantId = () => {
+export const GetIdFromUrl = (key) => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  return searchParams.get("restaurant_id");
+  return searchParams.get(key);
 };
 
 export const loggingIn = (responseData) => {
@@ -20,3 +20,10 @@ export const loggingOut = (responseData) => {
 
 export const getLocalStorageValue = (key) =>
   localStorage.getItem(key) && JSON.parse(localStorage.getItem(key));
+
+export const capitalizeFirstLetters = (str) => {
+  return str
+    .split(" ") // Split the string into words
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
+    .join(" "); // Join the words back into a single string
+};

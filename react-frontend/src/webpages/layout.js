@@ -1,22 +1,55 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IoRestaurantOutline } from "react-icons/io5";
 import { BiLogOut } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
-import { getLocalStorageValue, GetRestaurantId, loggingOut } from "./helper";
+import {
+  getLocalStorageValue,
+  GetIdFromUrl,
+  loggingOut,
+  capitalizeFirstLetters,
+} from "./helper";
+import { GET_SINGLE_STAFF } from "./apis/api";
 
 const Layout = ({ children }) => {
   const userType = getLocalStorageValue("user_type");
   const userId = getLocalStorageValue("user_id");
+  const userApi = userType === "Staff" ? GET_SINGLE_STAFF(userId) : "";
   const navigate = useNavigate();
-  const restaurantId = GetRestaurantId();
+  const restaurantId = useRef(GetIdFromUrl("restaurant_id"));
+  const [error, setError] = useState(null);
+  const [userName, setUserName] = useState("");
+
   const handleLogout = () => {
     loggingOut();
     navigate("/");
   };
 
   const handleEditProfile = () => {
-    navigate(`/admin/${userId}/edit?restaurant_id=${restaurantId}`);
+    navigate(`/admin/${userId}/edit?restaurant_id=${restaurantId.current}`);
   };
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(userApi, {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            Authorization: localStorage.token,
+          },
+        });
+        const data = await response.json();
+        setUserName(data.name);
+      } catch (error) {
+        setError(error);
+      }
+    }
+    if (userType === "Admin") {
+      setUserName("Admin");
+    } else {
+      fetchData();
+    }
+  }, []);
 
   return (
     <div className="dashboard">
@@ -27,7 +60,9 @@ const Layout = ({ children }) => {
         </h1>
         {userType && (
           <div className="user-info">
-            <span className="user-type">{userType} |</span>
+            <span className="user-type">
+              {capitalizeFirstLetters(userName)} |
+            </span>
             <span className="edit-profile" onClick={handleEditProfile}>
               Edit Profile |
             </span>
@@ -40,6 +75,7 @@ const Layout = ({ children }) => {
           </div>
         )}
       </div>
+      {error && <div className="error">{error}</div>}
       {children}
     </div>
   );

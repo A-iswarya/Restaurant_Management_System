@@ -52,7 +52,7 @@ module Api
       private
 
       def admin_params
-        params.require(:admin).permit(:username, :email, :phone_number, :password, :restaurant_id)
+        params.permit(:username, :email, :phone_number, :password, :restaurant_id)
       end
 
       def find_admin

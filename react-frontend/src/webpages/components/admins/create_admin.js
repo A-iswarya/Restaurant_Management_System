@@ -1,11 +1,11 @@
 import React from "react";
-import AdminForm from "./adminForm";
+import CreateForm from "../form";
 
 const CreateAdmin = () => {
   return (
     <div className="addAdmin">
       <h1>Add Admin</h1>
-      <AdminForm />
+      <CreateForm isAdmin={true} />
     </div>
   );
 };

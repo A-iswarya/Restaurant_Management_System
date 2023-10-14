@@ -1,11 +1,11 @@
 import React from "react";
-import AdminForm from "./adminForm";
+import EditForm from "../form";
 
 const EditAdmin = () => {
   return (
     <div className="editAdmin">
       <h1>Edit Admin</h1>
-      <AdminForm edit={true} />
+      <EditForm edit={true} isAdmin={true} />
     </div>
   );
 };

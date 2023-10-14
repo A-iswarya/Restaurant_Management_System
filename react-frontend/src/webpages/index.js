@@ -7,6 +7,7 @@ import CreateAdmin from "./components/admins/create_admin";
 import EditAdmin from "./components/admins/edit_admin";
 import Dashboard from "./dashboard";
 import Staffs from "./components/staffs";
+import CreateStaff from "./components/staffs/create_staff";
 
 const Webpages = () => {
   return (
@@ -17,8 +18,10 @@ const Webpages = () => {
         <Route path="/create" element={<CreateRestaurant />} />
         <Route path="/admin/create" element={<CreateAdmin />} />
         <Route path="/admin/:adminId/edit" element={<EditAdmin />} />
+
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/staffs" element={<Staffs />} />
+        <Route path="/staff/create" element={<CreateStaff />} />
       </Routes>
     </BrowserRouter>
   );

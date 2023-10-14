@@ -75,7 +75,8 @@ body {
 
 .addRestaurant,
 .addAdmin,
-.editAdmin {
+.editAdmin,
+.addStaff {
   h1 {
     font-size: 35px;
     font-weight: bold;
@@ -88,6 +89,14 @@ body {
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
+  }
+  select {
+    padding: 8px;
+    width: 31%;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: $bg-color;
   }
   label {
     font-size: 20px;
@@ -130,6 +139,15 @@ body {
       padding-left: 100px;
     }
   }
+  // .user-name {
+  //   font-size: 25px;
+  //   color: $secondary-color;
+  //   padding-bottom: 0;
+  //   display: flex;
+  //   align-items: center;
+  //   margin-top: 70px;
+  //   // border-bottom: 1px solid $bg-color;
+  // }
 
   .user-info {
     display: flex;
@@ -144,6 +162,9 @@ body {
     margin-right: 20px;
     margin-top: 70px;
     cursor: pointer;
+  }
+  .user-type {
+    color: $secondary-color;
   }
 }
 .card-container {

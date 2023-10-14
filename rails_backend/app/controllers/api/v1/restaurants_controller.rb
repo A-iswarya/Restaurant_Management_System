@@ -51,7 +51,7 @@ module Api
       private
 
       def restaurant_params
-        params.require(:restaurant).permit(:name, :city, :email, :phone_number)
+        params.permit(:name, :city, :email, :phone_number)
       end
 
       def find_restaurant

@@ -1,15 +1,29 @@
 import React, { useEffect, useRef, useState } from "react";
-import { POST_ADMIN, GET_SINGLE_ADMIN } from "../../apis/api";
-import { GetRestaurantId, loggingIn, getLocalStorageValue } from "../../helper";
+import { POST_ADMIN, GET_SINGLE_ADMIN, GET_STAFFS } from "../apis/api";
+import { GetIdFromUrl, loggingIn, getLocalStorageValue } from "../helper";
 import { useNavigate } from "react-router-dom";
-import DeleteAdmin from "./delete_admin";
+import DeleteAdmin from "./admins/delete_admin";
 
-const AdminForm = ({ edit }) => {
+const Form = ({ edit, isAdmin, isStaff }) => {
+  const submitApi = () => {
+    if (isStaff) {
+      if (edit) {
+      } else {
+        return GET_STAFFS(restaurantId.current);
+      }
+    } else if (isAdmin) {
+      if (edit) {
+        return GET_SINGLE_ADMIN(userId);
+      } else {
+        return POST_ADMIN;
+      }
+    }
+  };
+
   const userId = getLocalStorageValue("user_id");
-  const submitApi = edit ? GET_SINGLE_ADMIN(userId) : POST_ADMIN;
   const submitHttpCode = edit ? "PATCH" : "POST";
   const navigate = useNavigate();
-  const restaurantId = useRef(GetRestaurantId());
+  const restaurantId = useRef(GetIdFromUrl("restaurant_id"));
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     username: "",
@@ -18,6 +32,8 @@ const AdminForm = ({ edit }) => {
     email: "",
     phone_number: "",
     restaurant_id: restaurantId.current,
+    ...(isStaff ? { name: "" } : {}),
+    ...(isStaff ? { designation: "waitstaff" } : {}),
   });
 
   useEffect(() => {
@@ -66,9 +82,9 @@ const AdminForm = ({ edit }) => {
       return;
     }
     try {
-      const response = await fetch(submitApi, {
+      const response = await fetch(submitApi(), {
         method: submitHttpCode,
-        body: JSON.stringify({ admin: formData }),
+        body: JSON.stringify(formData),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
           Authorization: localStorage.token,
@@ -76,12 +92,18 @@ const AdminForm = ({ edit }) => {
       });
       if (response.ok) {
         const responseData = await response.json();
-        if (!edit) {
-          loggingIn(responseData);
+        if (isAdmin) {
+          if (!edit) {
+            loggingIn(responseData);
+          }
+          navigate(
+            `/dashboard?restaurant_id=${restaurantId.current}&admin_id=${responseData.data.id}`
+          );
+        } else if (isStaff) {
+          navigate(
+            `/dashboard?restaurant_id=${restaurantId.current}&admin_id=${userId}`
+          );
         }
-        navigate(
-          `/dashboard?restaurant_id=${restaurantId.current}&admin_id=${responseData.data.id}`
-        );
       } else setError(`Admin ${edit ? "Updation" : "Creation"} Failed`);
     } catch {
       setError("Something went wrong!");
@@ -98,6 +120,19 @@ const AdminForm = ({ edit }) => {
     <div>
       {error && <div className="error">{error}</div>}
       <form onSubmit={handleSubmit}>
+        {isStaff && (
+          <>
+            <label>Name: {edit ? "" : <span>*</span>}</label>
+            <input
+              value={formData.name}
+              type="text"
+              onChange={handleChange}
+              name="name"
+              required={!edit}
+            />
+            <br />
+          </>
+        )}
         <label>Username: {edit ? "" : <span>*</span>}</label>
         <input
           value={formData.username}
@@ -107,6 +142,21 @@ const AdminForm = ({ edit }) => {
           required={!edit}
         />
         <br />
+        {isStaff && (
+          <>
+            {" "}
+            <label>Designation:</label>
+            <select
+              value={formData.designation}
+              onChange={handleChange}
+              name="designation"
+            >
+              <option value="waitstaff">Waitstaff</option>
+              <option value="chef">Chef</option>
+            </select>
+            <br />
+          </>
+        )}
         <label>Email: </label>
         <input
           value={formData.email}
@@ -150,4 +200,4 @@ const AdminForm = ({ edit }) => {
   );
 };
 
-export default AdminForm;
+export default Form;

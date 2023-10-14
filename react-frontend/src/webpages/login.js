@@ -1,11 +1,11 @@
 import React, { useState, useRef } from "react";
 import Layout from "./layout";
-import { loggingIn, GetRestaurantId } from "./helper";
+import { loggingIn, GetIdFromUrl } from "./helper";
 import { LOGIN } from "./apis/api";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const restaurantId = useRef(GetRestaurantId());
+  const restaurantId = useRef(GetIdFromUrl("restaurant_id"));
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({

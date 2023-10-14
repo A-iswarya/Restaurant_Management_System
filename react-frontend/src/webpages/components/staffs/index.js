@@ -1,18 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Layout from "../../layout";
 import { GET_STAFFS } from "../../apis/api";
-import { GetRestaurantId } from "../../helper";
+import { GetIdFromUrl } from "../../helper";
+import { useNavigate } from "react-router-dom";
 
 const Staffs = () => {
   const [staffData, setStaffData] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
-  const restaurantId = GetRestaurantId();
+  const restaurantId = useRef(GetIdFromUrl("restaurant_id"));
+  const navigate = useNavigate();
+
+  const handleAddButtonClick = () => {
+    navigate(`/staff/create?restaurant_id=${restaurantId.current}`);
+  };
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(GET_STAFFS(restaurantId), {
+        const response = await fetch(GET_STAFFS(restaurantId.current), {
           method: "GET",
           headers: {
             "Content-type": "application/json; charset=UTF-8",
@@ -37,7 +43,9 @@ const Staffs = () => {
     <Layout>
       <div className="staffs-container">
         <h1>Manage Staffs</h1>
-        <button className="add-staff-button">Add Staff</button>
+        <button className="add-staff-button" onClick={handleAddButtonClick}>
+          Add Staff
+        </button>
         {error && <div className="error">{error}</div>}
         {isLoaded && staffData.length !== 0 && (
           <table className="staff-table">
