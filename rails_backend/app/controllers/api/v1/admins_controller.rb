@@ -30,7 +30,7 @@ module Api
       def update
         if @admin
           @admin.update(admin_params)
-          render json:  { message: 'Admin updated successfully', data: @admin }
+          render json: { message: 'Admin updated successfully', data: @admin }
         else
           render json: { error: 'Admin is not found' }, status: :unauthorized
         end
