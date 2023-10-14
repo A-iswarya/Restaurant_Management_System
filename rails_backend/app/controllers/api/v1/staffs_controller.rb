@@ -8,6 +8,7 @@ module Api
       before_action :find_staff, only: %i[show update destroy]
       def index
         @staffs = Staff.all
+        @staffs = @staffs.where(restaurant_id: params[:restaurant_id]) if params[:restaurant_id].present?
         render json: @staffs
       end
 

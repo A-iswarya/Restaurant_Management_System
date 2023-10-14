@@ -1,14 +1,19 @@
 import React from "react";
 import { TfiLayoutMenuV } from "react-icons/tfi";
 import { VscFeedback } from "react-icons/vsc";
-import { MdDining, MdOutlineBorderColor } from "react-icons/md";
+import {
+  MdDining,
+  MdOutlineBorderColor,
+  MdOutlineManageAccounts,
+} from "react-icons/md";
 import { PiCookingPotBold } from "react-icons/pi";
-import { getLocalStorageValue } from "./helper";
+import { GetRestaurantId, getLocalStorageValue } from "./helper";
 import Card from "./components/card";
 import Layout from "./layout";
 
 const Dashboard = () => {
   const userType = getLocalStorageValue("user_type");
+  const restaurantId = GetRestaurantId();
 
   let cards;
   if (userType === "Admin")
@@ -17,6 +22,12 @@ const Dashboard = () => {
         key={"Manage Menu"}
         icon={<TfiLayoutMenuV />}
         title={"Manage Menu"}
+      />,
+      <Card
+        key={"Manage Staffs"}
+        icon={<MdOutlineManageAccounts />}
+        title={"Manage Staffs"}
+        navigateTo={`/staffs?restaurant_id${restaurantId}`}
       />,
     ];
   else if (userType === "Customer")

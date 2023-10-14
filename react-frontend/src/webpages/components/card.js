@@ -1,7 +1,14 @@
 import React from "react";
-const Card = ({ icon, title }) => {
+import { useNavigate } from "react-router-dom";
+
+const Card = ({ icon, title, navigateTo }) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = () => {
+    navigate(navigateTo);
+  };
   return (
-    <div className="card">
+    <div className="card" onClick={handleSubmit}>
       <div className="card-icon">{icon}</div>
       <h2 className="card-title">{title}</h2>
     </div>

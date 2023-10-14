@@ -6,5 +6,8 @@ export const POST_RESTAURANT = `${API_DOMAIN}/restaurants`;
 export const POST_ADMIN = `${API_DOMAIN}/admins`;
 export const GET_SINGLE_ADMIN = (userId) => `${API_DOMAIN}/admins/${userId}`;
 
+export const GET_STAFFS = (restaurantId) =>
+  `${API_DOMAIN}/staffs?restaurant_id=${restaurantId}`;
+
 export const LOGIN = (userType) =>
   `${API_DOMAIN}/${userType.toLowerCase()}s/login`;

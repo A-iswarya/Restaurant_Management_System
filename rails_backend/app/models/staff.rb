@@ -26,5 +26,5 @@ class Staff < ApplicationRecord
   belongs_to :restaurant
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true
-  enum state: %i[waitstaff chef]
+  enum designation: %i[waitstaff chef]
 end

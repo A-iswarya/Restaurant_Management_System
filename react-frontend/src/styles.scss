@@ -258,3 +258,36 @@ body {
     font-size: 18px;
   }
 }
+
+.staffs-container {
+  padding: 20px;
+  position: relative; /* Allows positioning of children */
+
+  .add-staff-button {
+    background-color: #19324b; /* Use your primary color for the button */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    // position: absolute;
+    // margin-left: 520px;
+  }
+
+  .add-staff-button:hover {
+    background-color: #6b8e23; /* Change to your desired hover color */
+  }
+
+  .staff-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  .staff-table th,
+  .staff-table td {
+    border: 1px solid #19324b; /* Use your primary color for borders */
+    padding: 10px;
+    text-align: center;
+  }
+}
