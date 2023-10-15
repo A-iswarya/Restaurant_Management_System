@@ -211,7 +211,9 @@ const Form = ({ edit, isAdmin, isStaff }) => {
         />
         <br />
         <button>{edit ? "EDIT" : "Create"}</button>
-        {edit && <DeleteAdmin userId={userId} />}
+        {edit && (
+          <DeleteAdmin userId={userId} isStaff={isStaff} isAdmin={isAdmin} />
+        )}
       </form>
     </div>
   );
