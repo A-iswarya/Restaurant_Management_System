@@ -9,6 +9,8 @@ import Dashboard from "./dashboard";
 import Staffs from "./components/staffs";
 import CreateStaff from "./components/staffs/create_staff";
 import EditStaff from "./components/staffs/edit_staff";
+import CreateCustomer from "./components/customers/create_customer";
+import EditCustomer from "./components/customers/edit_customer";
 
 const Webpages = () => {
   return (
@@ -24,6 +26,9 @@ const Webpages = () => {
         <Route path="/staffs" element={<Staffs />} />
         <Route path="/staff/create" element={<CreateStaff />} />
         <Route path="/staff/:staffId/edit" element={<EditStaff />} />
+
+        <Route path="/customer/create" element={<CreateCustomer />} />
+        <Route path="/customer/:customerId/edit" element={<EditCustomer />} />
       </Routes>
     </BrowserRouter>
   );

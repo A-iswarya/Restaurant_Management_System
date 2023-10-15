@@ -8,12 +8,17 @@ import {
   loggingOut,
   capitalizeFirstLetters,
 } from "./helper";
-import { GET_SINGLE_STAFF } from "./apis/api";
+import { GET_SINGLE_STAFF, GET_SINGLE_CUSTOMER } from "./apis/api";
 
 const Layout = ({ children }) => {
   const userType = getLocalStorageValue("user_type");
   const userId = getLocalStorageValue("user_id");
-  const userApi = userType === "Staff" ? GET_SINGLE_STAFF(userId) : "";
+  const userApi =
+    userType === "Staff"
+      ? GET_SINGLE_STAFF(userId)
+      : userType === "Customer"
+      ? GET_SINGLE_CUSTOMER(userId)
+      : "";
   const navigate = useNavigate();
   const restaurantId = useRef(GetIdFromUrl("restaurant_id"));
   const [error, setError] = useState(null);
@@ -50,7 +55,7 @@ const Layout = ({ children }) => {
     }
     if (userType === "Admin") {
       setUserName("Admin");
-    } else if (userType === "Staff") {
+    } else if (userType === "Staff" || userType === "Customer") {
       fetchData();
     }
   }, []);

@@ -8,8 +8,11 @@ export const GET_SINGLE_ADMIN = (userId) => `${API_DOMAIN}/admins/${userId}`;
 
 export const GET_STAFFS = (restaurantId) =>
   `${API_DOMAIN}/staffs?restaurant_id=${restaurantId}`;
-export const GET_SINGLE_STAFF = (staff_id) =>
-  `${API_DOMAIN}/staffs/${staff_id}`;
+export const GET_SINGLE_STAFF = (staffId) => `${API_DOMAIN}/staffs/${staffId}`;
+
+export const GET_CUSTOMERS = `${API_DOMAIN}/customers`;
+export const GET_SINGLE_CUSTOMER = (customerId) =>
+  `${API_DOMAIN}/customers/${customerId}`;
 
 export const LOGIN = (userType) =>
   `${API_DOMAIN}/${userType.toLowerCase()}s/login`;

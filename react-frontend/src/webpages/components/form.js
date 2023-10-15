@@ -4,12 +4,14 @@ import {
   GET_SINGLE_ADMIN,
   GET_STAFFS,
   GET_SINGLE_STAFF,
+  GET_CUSTOMERS,
+  GET_SINGLE_CUSTOMER,
 } from "../apis/api";
 import { GetIdFromUrl, loggingIn, getLocalStorageValue } from "../helper";
 import { useNavigate } from "react-router-dom";
-import DeleteAdmin from "./delete_user";
+import DeleteUser from "./delete_user";
 
-const Form = ({ edit, isAdmin, isStaff }) => {
+const Form = ({ edit, isAdmin, isStaff, isCustomer }) => {
   const submitApi = () => {
     if (isStaff) {
       if (edit) {
@@ -23,6 +25,12 @@ const Form = ({ edit, isAdmin, isStaff }) => {
       } else {
         return POST_ADMIN;
       }
+    } else if (isCustomer) {
+      if (edit) {
+        return GET_SINGLE_CUSTOMER(userId);
+      } else {
+        return GET_CUSTOMERS;
+      }
     }
   };
 
@@ -31,10 +39,13 @@ const Form = ({ edit, isAdmin, isStaff }) => {
       return GET_SINGLE_STAFF(userId);
     } else if (isAdmin) {
       return GET_SINGLE_ADMIN(userId);
+    } else if (isCustomer) {
+      return GET_SINGLE_CUSTOMER(userId);
     }
   };
 
   const userId = getLocalStorageValue("user_id");
+  const userType = getLocalStorageValue("user_type");
   const submitHttpCode = edit ? "PATCH" : "POST";
   const navigate = useNavigate();
   const restaurantId = useRef(GetIdFromUrl("restaurant_id"));
@@ -46,7 +57,7 @@ const Form = ({ edit, isAdmin, isStaff }) => {
     email: "",
     phone_number: "",
     restaurant_id: restaurantId.current,
-    ...(isStaff ? { name: "" } : {}),
+    ...(isStaff || isCustomer ? { name: "" } : {}),
     ...(isStaff ? { designation: "waitstaff" } : {}),
   });
 
@@ -68,7 +79,7 @@ const Form = ({ edit, isAdmin, isStaff }) => {
             email: data.email,
             phone_number: data.phone_number,
             name: data,
-            ...(isStaff ? { name: data.name } : ""),
+            ...(isStaff || isCustomer ? { name: data.name } : ""),
             ...(isStaff ? { designation: data.designation } : ""),
           },
         });
@@ -117,11 +128,24 @@ const Form = ({ edit, isAdmin, isStaff }) => {
             `/dashboard?restaurant_id=${restaurantId.current}&admin_id=${responseData.data.id}`
           );
         } else if (isStaff) {
+          if (edit) {
+            navigate(
+              `/dashboard?restaurant_id=${restaurantId.current}&staff_id=${responseData.data.id}`
+            );
+          } else {
+            navigate(
+              `/dashboard?restaurant_id=${restaurantId.current}&admin_id=${userId}`
+            );
+          }
+        } else if (isCustomer) {
+          if (!edit) {
+            loggingIn(responseData);
+          }
           navigate(
-            `/dashboard?restaurant_id=${restaurantId.current}&admin_id=${userId}`
+            `/dashboard?restaurant_id=${restaurantId.current}&customer_id=${responseData.data.id}`
           );
         }
-      } else setError(`Admin ${edit ? "Updation" : "Creation"} Failed`);
+      } else setError(`${userType} ${edit ? "Updation" : "Creation"} Failed`);
     } catch {
       setError("Something went wrong!");
     }
@@ -137,15 +161,15 @@ const Form = ({ edit, isAdmin, isStaff }) => {
     <div>
       {error && <div className="error">{error.message}</div>}
       <form onSubmit={handleSubmit}>
-        {isStaff && (
+        {(isStaff || isCustomer) && (
           <>
-            <label>Name: {edit ? "" : <span>*</span>}</label>
+            <label>Name: {edit ? "" : isCustomer ? "" : <span>*</span>}</label>
             <input
               value={formData.name}
               type="text"
               onChange={handleChange}
               name="name"
-              required={!edit}
+              required={!edit && isStaff}
             />
             <br />
           </>
@@ -212,7 +236,12 @@ const Form = ({ edit, isAdmin, isStaff }) => {
         <br />
         <button>{edit ? "EDIT" : "Create"}</button>
         {edit && (
-          <DeleteAdmin userId={userId} isStaff={isStaff} isAdmin={isAdmin} />
+          <DeleteUser
+            userId={userId}
+            isStaff={isStaff}
+            isAdmin={isAdmin}
+            isCustomer={isCustomer}
+          />
         )}
       </form>
     </div>

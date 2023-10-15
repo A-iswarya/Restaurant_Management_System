@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import Layout from "./layout";
 import { loggingIn, GetIdFromUrl } from "./helper";
 import { LOGIN } from "./apis/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
   const restaurantId = useRef(GetIdFromUrl("restaurant_id"));
@@ -29,7 +29,9 @@ const Login = () => {
         const responseData = await response.json();
         loggingIn(responseData);
         navigate(
-          `/dashboard?restaurant_id=${restaurantId.current}&admin_id=${responseData.data.id}`
+          `/dashboard?restaurant_id=${
+            restaurantId.current
+          }&${responseData.user_type.toLowerCase()}_id=${responseData.data.id}`
         );
       } else setError("Incorrect username/password");
     } catch {
@@ -99,6 +101,10 @@ const Login = () => {
           </div>
           <div className="password-options">
             <span className="forgot-password">Forgot Password?</span>
+            <Link to={"/customer/create"}>
+              {" "}
+              <span className="create-customer">Register</span>
+            </Link>
           </div>
           <button type="submit" className="submit-button">
             Submit
