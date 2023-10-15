@@ -1,8 +1,12 @@
 import React from "react";
 import { AiOutlineDelete } from "react-icons/ai";
-import { GET_SINGLE_ADMIN, GET_SINGLE_STAFF } from "../../apis/api";
+import {
+  GET_SINGLE_ADMIN,
+  GET_SINGLE_CUSTOMER,
+  GET_SINGLE_STAFF,
+} from "../apis/api";
 import { useNavigate } from "react-router-dom";
-import { loggingOut } from "../../helper";
+import { loggingOut } from "../helper";
 
 const DeleteAdmin = (props) => {
   const navigate = useNavigate();
@@ -11,6 +15,8 @@ const DeleteAdmin = (props) => {
       return GET_SINGLE_STAFF(props.userId);
     } else if (props.isAdmin) {
       return GET_SINGLE_ADMIN(props.userId);
+    } else if (props.isCustomer) {
+      return GET_SINGLE_CUSTOMER(props.userId);
     }
   };
 

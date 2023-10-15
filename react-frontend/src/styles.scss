@@ -236,13 +236,24 @@ body {
   }
 
   .password-options {
+    display: flex;
+    justify-content: space-between;
     text-align: left;
   }
 
   .forgot-password {
-    color: #19324b; /* Link color, using your primary color */
+    color: $primary-color; /* Link color, using your primary color */
     cursor: pointer;
   }
+
+  .create-customer {
+    color: $primary-color; /* Adjust the color as needed */
+    cursor: pointer;
+  }
+
+  // .create-customer{
+  //   text-align: right;
+  // }
 
   .submit-button {
     background-color: $primary-color; /* Button background color, using your primary color */
