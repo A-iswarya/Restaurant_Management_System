@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_14_030932) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_15_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -48,6 +48,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_14_030932) do
     t.index ["restaurant_id"], name: "index_staffs_on_restaurant_id"
   end
 
+  create_table "tables", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "table_number"
+    t.integer "no_of_seats"
+    t.uuid "restaurant_id", null: false
+    t.uuid "staff_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["restaurant_id"], name: "index_tables_on_restaurant_id"
+    t.index ["staff_id"], name: "index_tables_on_staff_id"
+  end
+
   add_foreign_key "admins", "restaurants"
   add_foreign_key "staffs", "restaurants"
+  add_foreign_key "tables", "restaurants"
+  add_foreign_key "tables", "staffs"
 end
