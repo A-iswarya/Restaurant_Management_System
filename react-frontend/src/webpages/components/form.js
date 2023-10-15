@@ -7,7 +7,7 @@ import {
 } from "../apis/api";
 import { GetIdFromUrl, loggingIn, getLocalStorageValue } from "../helper";
 import { useNavigate } from "react-router-dom";
-import DeleteAdmin from "./admins/delete_admin";
+import DeleteAdmin from "./delete_user";
 
 const Form = ({ edit, isAdmin, isStaff }) => {
   const submitApi = () => {
