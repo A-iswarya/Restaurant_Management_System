@@ -27,7 +27,13 @@ module Api
       end
 
       def valid_login?
-        @user.present? && @user.restaurant_id == @params[:restaurant_id] && @user.authenticate(@params[:password])
+        valid_conditions = []
+        valid_conditions << [@user.present?]
+        if @user.has_attribute?('restaurant_id')
+          valid_conditions << @user.restaurant_id == @params[:restaurant_id]
+        end
+        valid_conditions << @user.authenticate(@params[:password])
+        valid_conditions.all?
       end
 
       def render_successful_login

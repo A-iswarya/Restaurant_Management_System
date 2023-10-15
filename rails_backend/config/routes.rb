@@ -8,6 +8,9 @@ Rails.application.routes.draw do
       resources :staffs do
         post '/login', to: 'authentication#login', on: :collection
       end
+      resources :customers do
+        post '/login', to: 'authentication#login', on: :collection
+      end
     end
   end
 end
