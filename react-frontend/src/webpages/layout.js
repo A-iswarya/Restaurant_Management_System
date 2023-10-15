@@ -25,7 +25,11 @@ const Layout = ({ children }) => {
   };
 
   const handleEditProfile = () => {
-    navigate(`/admin/${userId}/edit?restaurant_id=${restaurantId.current}`);
+    navigate(
+      `/${userType.toLowerCase()}/${userId}/edit?restaurant_id=${
+        restaurantId.current
+      }`
+    );
   };
 
   useEffect(() => {
@@ -46,7 +50,7 @@ const Layout = ({ children }) => {
     }
     if (userType === "Admin") {
       setUserName("Admin");
-    } else {
+    } else if (userType === "Staff") {
       fetchData();
     }
   }, []);
@@ -61,7 +65,7 @@ const Layout = ({ children }) => {
         {userType && (
           <div className="user-info">
             <span className="user-type">
-              {capitalizeFirstLetters(userName)} |
+              {capitalizeFirstLetters(userName)}
             </span>
             <span className="edit-profile" onClick={handleEditProfile}>
               Edit Profile |
@@ -75,7 +79,7 @@ const Layout = ({ children }) => {
           </div>
         )}
       </div>
-      {error && <div className="error">{error}</div>}
+      {error && <div className="error">{error.message}</div>}
       {children}
     </div>
   );

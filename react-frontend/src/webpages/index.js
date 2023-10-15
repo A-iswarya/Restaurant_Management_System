@@ -8,6 +8,7 @@ import EditAdmin from "./components/admins/edit_admin";
 import Dashboard from "./dashboard";
 import Staffs from "./components/staffs";
 import CreateStaff from "./components/staffs/create_staff";
+import EditStaff from "./components/staffs/edit_staff";
 
 const Webpages = () => {
   return (
@@ -22,6 +23,7 @@ const Webpages = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/staffs" element={<Staffs />} />
         <Route path="/staff/create" element={<CreateStaff />} />
+        <Route path="/staff/:staffId/edit" element={<EditStaff />} />
       </Routes>
     </BrowserRouter>
   );

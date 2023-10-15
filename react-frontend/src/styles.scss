@@ -150,7 +150,6 @@ body {
   // }
 
   .user-info {
-    display: flex;
     align-items: center;
     font-size: 20px;
     // font-weight: bold;
@@ -159,12 +158,12 @@ body {
   .user-info .edit-profile,
   .user-info .user-type,
   .user-info .logout {
-    margin-right: 20px;
-    margin-top: 70px;
     cursor: pointer;
   }
   .user-type {
     color: $secondary-color;
+    display: block;
+    font-size: 25px;
   }
 }
 .card-container {

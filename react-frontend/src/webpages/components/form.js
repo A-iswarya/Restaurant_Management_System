@@ -1,5 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { POST_ADMIN, GET_SINGLE_ADMIN, GET_STAFFS } from "../apis/api";
+import {
+  POST_ADMIN,
+  GET_SINGLE_ADMIN,
+  GET_STAFFS,
+  GET_SINGLE_STAFF,
+} from "../apis/api";
 import { GetIdFromUrl, loggingIn, getLocalStorageValue } from "../helper";
 import { useNavigate } from "react-router-dom";
 import DeleteAdmin from "./admins/delete_admin";
@@ -8,6 +13,7 @@ const Form = ({ edit, isAdmin, isStaff }) => {
   const submitApi = () => {
     if (isStaff) {
       if (edit) {
+        return GET_SINGLE_STAFF(userId);
       } else {
         return GET_STAFFS(restaurantId.current);
       }
@@ -17,6 +23,14 @@ const Form = ({ edit, isAdmin, isStaff }) => {
       } else {
         return POST_ADMIN;
       }
+    }
+  };
+
+  const fetchApi = () => {
+    if (isStaff) {
+      return GET_SINGLE_STAFF(userId);
+    } else if (isAdmin) {
+      return GET_SINGLE_ADMIN(userId);
     }
   };
 
@@ -39,7 +53,7 @@ const Form = ({ edit, isAdmin, isStaff }) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(GET_SINGLE_ADMIN(userId), {
+        const response = await fetch(fetchApi(), {
           method: "GET",
           headers: {
             "Content-type": "application/json; charset=UTF-8",
@@ -53,6 +67,9 @@ const Form = ({ edit, isAdmin, isStaff }) => {
             username: data.username,
             email: data.email,
             phone_number: data.phone_number,
+            name: data,
+            ...(isStaff ? { name: data.name } : ""),
+            ...(isStaff ? { designation: data.designation } : ""),
           },
         });
       } catch (error) {
@@ -118,7 +135,7 @@ const Form = ({ edit, isAdmin, isStaff }) => {
 
   return (
     <div>
-      {error && <div className="error">{error}</div>}
+      {error && <div className="error">{error.message}</div>}
       <form onSubmit={handleSubmit}>
         {isStaff && (
           <>
