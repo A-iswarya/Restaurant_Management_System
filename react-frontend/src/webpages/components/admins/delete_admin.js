@@ -1,15 +1,23 @@
 import React from "react";
 import { AiOutlineDelete } from "react-icons/ai";
-import { GET_SINGLE_ADMIN } from "../../apis/api";
+import { GET_SINGLE_ADMIN, GET_SINGLE_STAFF } from "../../apis/api";
 import { useNavigate } from "react-router-dom";
 import { loggingOut } from "../../helper";
 
-const DeleteAdmin = ({ userId }) => {
+const DeleteAdmin = (props) => {
   const navigate = useNavigate();
+  const fetchApi = () => {
+    if (props.isStaff) {
+      return GET_SINGLE_STAFF(props.userId);
+    } else if (props.isAdmin) {
+      return GET_SINGLE_ADMIN(props.userId);
+    }
+  };
+
   const handleDelete = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(GET_SINGLE_ADMIN(userId), {
+      const response = await fetch(fetchApi(), {
         method: "DELETE",
         headers: {
           "Content-type": "application/json; charset=UTF-8",
