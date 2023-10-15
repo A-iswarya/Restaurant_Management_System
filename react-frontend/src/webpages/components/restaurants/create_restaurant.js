@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { GET_RESTAURANTS } from "./apis/api";
+import { POST_RESTAURANT } from "../../apis/api";
 import { useNavigate } from "react-router-dom";
+
 const CreateRestaurant = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
@@ -25,15 +26,17 @@ const CreateRestaurant = () => {
       return;
     }
     try {
-      const response = await fetch(GET_RESTAURANTS, {
+      const response = await fetch(POST_RESTAURANT, {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
         },
       });
-      if (response.ok) navigate("/admin/create");
-      else setError("Restaurant Creation Failed!");
+      if (response.ok) {
+        const responseData = await response.json();
+        navigate(`/admin/create?restaurant_id=${responseData.data.id}`);
+      } else setError("Restaurant Creation Failed!");
     } catch {
       setError("Something went wrong!");
     }
@@ -50,7 +53,9 @@ const CreateRestaurant = () => {
       <h1>Add Restaurant</h1>
       {error && <div className="error">Error: {error}</div>}
       <form onSubmit={handleSubmit}>
-        <label>Name: </label>
+        <label>
+          Name:<span>*</span>
+        </label>
         <input
           value={formData.name}
           type="text"

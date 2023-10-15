@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: restaurants
@@ -11,4 +13,5 @@
 #  updated_at   :datetime         not null
 #
 class Restaurant < ApplicationRecord
+  has_one :admin
 end
