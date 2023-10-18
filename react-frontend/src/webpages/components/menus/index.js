@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Layout from "../../layout";
 import { GetIdFromUrl } from "../../helper";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GET_MENUS } from "../../apis/api";
 
 const Menus = () => {
@@ -62,6 +62,7 @@ const Menus = () => {
                 <th>Cooking Time</th>
                 <th>Price</th>
                 <th>Chef</th>
+                <th>Edit</th>
               </tr>
             </thead>
             <tbody>
@@ -72,6 +73,13 @@ const Menus = () => {
                   <td>{menu.cooking_time}</td>
                   <td>{menu.price}</td>
                   <td>{menu.staff_id}</td>
+                  <td>
+                    <Link
+                      to={`/menus/${menu.id}/edit?admin_id=${adminId.current}&restaurant_id=${restaurantId.current}`}
+                    >
+                      Edit
+                    </Link>
+                  </td>
                 </tr>
               ))}
             </tbody>

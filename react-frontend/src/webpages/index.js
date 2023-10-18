@@ -13,6 +13,7 @@ import CreateCustomer from "./components/customers/create_customer";
 import EditCustomer from "./components/customers/edit_customer";
 import Menus from "./components/menus";
 import CreateMenu from "./components/menus/create_menu";
+import EditMenu from "./components/menus/edit_menu";
 
 const Webpages = () => {
   return (
@@ -34,6 +35,7 @@ const Webpages = () => {
 
         <Route path="/menus" element={<Menus />} />
         <Route path="/menus/create" element={<CreateMenu />} />
+        <Route path="/menus/:menuId/edit" element={<EditMenu />} />
       </Routes>
     </BrowserRouter>
   );

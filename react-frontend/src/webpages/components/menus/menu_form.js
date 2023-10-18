@@ -2,14 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import { GET_SINGLE_MENU, GET_MENUS, GET_STAFFS } from "../../apis/api";
 
 import { GetIdFromUrl } from "../../helper";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const MenuForm = ({ edit }) => {
   const adminId = useRef(GetIdFromUrl("admin_id"));
   const restaurantId = useRef(GetIdFromUrl("restaurant_id"));
-  const menuId = useRef(GetIdFromUrl("menu_id"));
+  const { menuId } = useParams();
   const navigate = useNavigate();
   const submitHttpCode = edit ? "PATCH" : "POST";
+  const submitApi = edit ? GET_SINGLE_MENU(menuId) : GET_MENUS;
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -73,7 +74,7 @@ const MenuForm = ({ edit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(GET_MENUS, {
+      const response = await fetch(submitApi, {
         method: submitHttpCode,
         body: JSON.stringify(formData),
         headers: {
