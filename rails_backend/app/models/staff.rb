@@ -26,5 +26,6 @@ class Staff < ApplicationRecord
   belongs_to :restaurant
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true
+  scope :chefs, -> { where(designation: 'chef') }
   enum designation: %i[waitstaff chef]
 end

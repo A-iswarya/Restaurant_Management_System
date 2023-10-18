@@ -1,36 +1,42 @@
 import React, { useEffect, useState, useRef } from "react";
 import Layout from "../../layout";
-import { GET_STAFFS } from "../../apis/api";
 import { GetIdFromUrl } from "../../helper";
 import { useNavigate } from "react-router-dom";
+import { GET_MENUS } from "../../apis/api";
 
-const Staffs = () => {
-  const [staffData, setStaffData] = useState([]);
+const Menus = () => {
+  const [menuData, setMenuData] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
+  const adminId = useRef(GetIdFromUrl("admin_id"));
   const restaurantId = useRef(GetIdFromUrl("restaurant_id"));
   const navigate = useNavigate();
 
   const handleAddButtonClick = () => {
-    navigate(`/staff/create?restaurant_id=${restaurantId.current}`);
+    navigate(
+      `/menus/create?admin_id=${adminId.current}&restaurant_id=${restaurantId.current}`
+    );
   };
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(GET_STAFFS(restaurantId.current), {
-          method: "GET",
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-            Authorization: localStorage.token,
-          },
-        });
+        const response = await fetch(
+          `${GET_MENUS}?admin_id=${adminId.current}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-type": "application/json; charset=UTF-8",
+              Authorization: localStorage.token,
+            },
+          }
+        );
         if (response.ok) {
           const data = await response.json();
-          setStaffData(data);
+          setMenuData(data);
           setIsLoaded(true);
         } else {
-          setError("Failed to fetch staff data.");
+          setError("Failed to fetch menu data.");
         }
       } catch (error) {
         setError(error);
@@ -42,30 +48,30 @@ const Staffs = () => {
   return (
     <Layout>
       <div className="staffs-container">
-        <h1>Manage Staffs</h1>
+        <h1>Manage Menus</h1>
         <button className="add-staff-button" onClick={handleAddButtonClick}>
-          Add Staff
+          Add Menu
         </button>
         {error && <div className="error">{error.message}</div>}
-        {isLoaded && staffData.length !== 0 && (
+        {isLoaded && menuData.length !== 0 && (
           <table className="staff-table">
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Username</th>
-                <th>Designation</th>
-                <th>Email</th>
-                <th>Phone Number</th>
+                <th>Description</th>
+                <th>Cooking Time</th>
+                <th>Price</th>
+                <th>Chef</th>
               </tr>
             </thead>
             <tbody>
-              {staffData.map((staff, index) => (
+              {menuData.map((menu, index) => (
                 <tr key={index}>
-                  <td>{staff.name}</td>
-                  <td>{staff.username}</td>
-                  <td>{staff.designation}</td>
-                  <td>{staff.email}</td>
-                  <td>{staff.phone_number}</td>
+                  <td>{menu.name}</td>
+                  <td>{menu.description}</td>
+                  <td>{menu.cooking_time}</td>
+                  <td>{menu.price}</td>
+                  <td>{menu.staff_id}</td>
                 </tr>
               ))}
             </tbody>
@@ -76,4 +82,4 @@ const Staffs = () => {
   );
 };
 
-export default Staffs;
+export default Menus;

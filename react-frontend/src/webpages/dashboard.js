@@ -14,6 +14,7 @@ import Layout from "./layout";
 const Dashboard = () => {
   const userType = getLocalStorageValue("user_type");
   const restaurantId = useRef(GetIdFromUrl("restaurant_id"));
+  const adminIid = useRef(GetIdFromUrl("admin_id"));
 
   let cards;
   if (userType === "Admin")
@@ -22,6 +23,7 @@ const Dashboard = () => {
         key={"Manage Menu"}
         icon={<TfiLayoutMenuV />}
         title={"Manage Menu"}
+        navigateTo={`/menus?admin_id=${adminIid.current}&restaurant_id=${restaurantId.current}`}
       />,
       <Card
         key={"Manage Staffs"}

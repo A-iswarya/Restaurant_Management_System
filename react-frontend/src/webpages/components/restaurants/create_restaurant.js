@@ -51,7 +51,7 @@ const CreateRestaurant = () => {
   return (
     <div className="addRestaurant">
       <h1>Add Restaurant</h1>
-      {error && <div className="error">Error: {error}</div>}
+      {error && <div className="error">Error: {error.message}</div>}
       <form onSubmit={handleSubmit}>
         <label>
           Name:<span>*</span>

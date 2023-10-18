@@ -49,7 +49,7 @@ const Login = () => {
     <Layout>
       <div className="login-container">
         <h2>Login</h2>
-        {error && <div className="error">{error}</div>}
+        {error && <div className="error">{error.message}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="username">Username</label>
