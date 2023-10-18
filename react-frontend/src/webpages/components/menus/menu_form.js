@@ -3,6 +3,7 @@ import { GET_SINGLE_MENU, GET_MENUS, GET_STAFFS } from "../../apis/api";
 
 import { GetIdFromUrl } from "../../helper";
 import { useNavigate, useParams } from "react-router-dom";
+import DeleteMenu from "./delete_menu";
 
 const MenuForm = ({ edit }) => {
   const adminId = useRef(GetIdFromUrl("admin_id"));
@@ -154,6 +155,13 @@ const MenuForm = ({ edit }) => {
         <br />
         <button>{edit ? "EDIT" : "Create"}</button>
       </form>
+      {edit && (
+        <DeleteMenu
+          adminId={adminId}
+          restaurantId={restaurantId}
+          menuId={menuId}
+        />
+      )}
     </div>
   );
 };
