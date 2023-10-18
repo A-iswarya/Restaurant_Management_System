@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import Layout from "../../layout";
-import { GetIdFromUrl } from "../../helper";
+import { GetIdFromUrl, capitalizeFirstLetters } from "../../helper";
 import { Link, useNavigate } from "react-router-dom";
-import { GET_MENUS } from "../../apis/api";
+import { GET_MENUS, GET_STAFFS } from "../../apis/api";
 
 const Menus = () => {
   const [menuData, setMenuData] = useState([]);
+  const [staffData, setstaffData] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
   const adminId = useRef(GetIdFromUrl("admin_id"));
@@ -19,7 +20,7 @@ const Menus = () => {
   };
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchMenuData() {
       try {
         const response = await fetch(
           `${GET_MENUS}?admin_id=${adminId.current}`,
@@ -42,7 +43,30 @@ const Menus = () => {
         setError(error);
       }
     }
-    fetchData();
+    fetchMenuData();
+    async function fetchStaff() {
+      try {
+        const response = await fetch(
+          `${GET_STAFFS(restaurantId.current)}&chef=true`,
+          {
+            method: "GET",
+            headers: {
+              "Content-type": "application/json; charset=UTF-8",
+              Authorization: localStorage.token,
+            },
+          }
+        );
+        const data = await response.json();
+        const staffMapping = {};
+        data.forEach((staff) => {
+          staffMapping[staff.id] = capitalizeFirstLetters(staff.name);
+        });
+        setstaffData(staffMapping);
+      } catch (error) {
+        setError(error);
+      }
+    }
+    fetchStaff();
   }, []);
 
   return (
@@ -72,7 +96,7 @@ const Menus = () => {
                   <td>{menu.description}</td>
                   <td>{menu.cooking_time}</td>
                   <td>{menu.price}</td>
-                  <td>{menu.staff_id}</td>
+                  <td>{staffData[menu.staff_id]}</td>
                   <td>
                     <Link
                       to={`/menus/${menu.id}/edit?admin_id=${adminId.current}&restaurant_id=${restaurantId.current}`}
