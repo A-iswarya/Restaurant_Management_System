@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_16_035952) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_19_042117) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -51,6 +51,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_16_035952) do
     t.index ["staff_id"], name: "index_menus_on_staff_id"
   end
 
+  create_table "restaurant_customers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "restaurant_id", null: false
+    t.uuid "customer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_restaurant_customers_on_customer_id"
+    t.index ["restaurant_id"], name: "index_restaurant_customers_on_restaurant_id"
+  end
+
   create_table "restaurants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "city"
@@ -88,6 +97,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_16_035952) do
   add_foreign_key "customers", "tables"
   add_foreign_key "menus", "admins"
   add_foreign_key "menus", "staffs"
+  add_foreign_key "restaurant_customers", "customers"
+  add_foreign_key "restaurant_customers", "restaurants"
   add_foreign_key "staffs", "restaurants"
   add_foreign_key "tables", "restaurants"
   add_foreign_key "tables", "staffs"
