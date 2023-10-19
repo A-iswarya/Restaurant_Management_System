@@ -3,7 +3,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { GET_SINGLE_MENU } from "../../apis/api";
 import { useNavigate } from "react-router-dom";
 
-const DeleteMenu = ({ adminId, restaurantId, menuId }) => {
+const DeleteMenu = ({ restaurantId, menuId }) => {
   const navigate = useNavigate();
 
   const handleDelete = async (e) => {
@@ -17,9 +17,7 @@ const DeleteMenu = ({ adminId, restaurantId, menuId }) => {
         },
       });
       if (response.ok) {
-        navigate(
-          `/menus?admin_id=${adminId.current}&restaurant_id=${restaurantId.current}`
-        );
+        navigate(`/menus?restaurant_id=${restaurantId.current}`);
       } else console.log(`Menu Deletion Failed`);
     } catch {
       console.log("Something went wrong!");

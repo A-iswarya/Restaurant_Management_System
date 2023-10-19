@@ -5,9 +5,10 @@ module Api
     # Menu controller
     class MenusController < ApplicationController
       before_action :find_menu, only: %i[show update destroy]
+      before_action :check_admin
       def index
         @menus = Menu.all
-        @menus = @menus.where(admin_id: params[:admin_id]) if params[:admin_id].present?
+        @menus = @menus.where(admin_id: @current_user.id)
         @menus = @menus.where(staff_id: params[:staff_id]) if params[:staff_id].present?
         render json: @menus
       end
@@ -57,6 +58,10 @@ module Api
 
       def find_menu
         @menu = Menu.find_by_id(params[:id])
+      end
+
+      def check_admin
+        render json: { message: 'Please login as an Admin'} unless @current_user.is_a?(Admin)
       end
     end
   end

@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { GET_SINGLE_MENU, GET_MENUS, GET_STAFFS } from "../../apis/api";
 
-import { GetIdFromUrl } from "../../helper";
+import { GetIdFromUrl, getLocalStorageValue } from "../../helper";
 import { useNavigate, useParams } from "react-router-dom";
 import DeleteMenu from "./delete_menu";
 
 const MenuForm = ({ edit }) => {
-  const adminId = useRef(GetIdFromUrl("admin_id"));
+  const adminId = getLocalStorageValue("user_id");
   const restaurantId = useRef(GetIdFromUrl("restaurant_id"));
   const { menuId } = useParams();
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const MenuForm = ({ edit }) => {
     cooking_time: "",
     price: "",
     staff_id: "",
-    admin_id: adminId.current,
+    admin_id: adminId,
   });
   const [staffOptions, setStaffOptions] = useState([]);
 
@@ -84,9 +84,7 @@ const MenuForm = ({ edit }) => {
         },
       });
       if (response.ok) {
-        navigate(
-          `/menus?admin_id=${adminId.current}&restaurant_id=${restaurantId.current}`
-        );
+        navigate(`/menus?restaurant_id=${restaurantId.current}`);
       } else setError(`Menu ${edit ? "Updation" : "Creation"} Failed`);
     } catch {
       setError("Something went wrong!");
@@ -155,13 +153,7 @@ const MenuForm = ({ edit }) => {
         <br />
         <button>{edit ? "EDIT" : "Create"}</button>
       </form>
-      {edit && (
-        <DeleteMenu
-          adminId={adminId}
-          restaurantId={restaurantId}
-          menuId={menuId}
-        />
-      )}
+      {edit && <DeleteMenu restaurantId={restaurantId} menuId={menuId} />}
     </div>
   );
 };

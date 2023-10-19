@@ -9,29 +9,23 @@ const Menus = () => {
   const [staffData, setstaffData] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
-  const adminId = useRef(GetIdFromUrl("admin_id"));
   const restaurantId = useRef(GetIdFromUrl("restaurant_id"));
   const navigate = useNavigate();
 
   const handleAddButtonClick = () => {
-    navigate(
-      `/menus/create?admin_id=${adminId.current}&restaurant_id=${restaurantId.current}`
-    );
+    navigate(`/menus/create?restaurant_id=${restaurantId.current}`);
   };
 
   useEffect(() => {
     async function fetchMenuData() {
       try {
-        const response = await fetch(
-          `${GET_MENUS}?admin_id=${adminId.current}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-type": "application/json; charset=UTF-8",
-              Authorization: localStorage.token,
-            },
-          }
-        );
+        const response = await fetch(GET_MENUS, {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            Authorization: localStorage.token,
+          },
+        });
         if (response.ok) {
           const data = await response.json();
           setMenuData(data);
@@ -99,7 +93,7 @@ const Menus = () => {
                   <td>{staffData[menu.staff_id]}</td>
                   <td>
                     <Link
-                      to={`/menus/${menu.id}/edit?admin_id=${adminId.current}&restaurant_id=${restaurantId.current}`}
+                      to={`/menus/${menu.id}/edit?restaurant_id=${restaurantId.current}`}
                     >
                       Edit
                     </Link>
