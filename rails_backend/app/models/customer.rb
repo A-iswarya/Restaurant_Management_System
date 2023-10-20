@@ -25,6 +25,7 @@ class Customer < ApplicationRecord
   belongs_to :table, optional: true
   has_many :restaurant_customers, dependent: :destroy
   has_many :restaurants, through: :restaurant_customers
+  has_many :feedbacks, dependent: :destroy
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true
 end
