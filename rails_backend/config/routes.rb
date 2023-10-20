@@ -12,6 +12,7 @@ Rails.application.routes.draw do
         post '/login', to: 'authentication#login', on: :collection
       end
       resources :menus
+      resources :feedbacks
     end
   end
 end

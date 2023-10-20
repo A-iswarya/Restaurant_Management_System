@@ -38,6 +38,7 @@ const Dashboard = () => {
         key={"Add Feedback"}
         icon={<VscFeedback />}
         title={"Add Feedback"}
+        navigateTo={`/feedbacks?restaurant_id=${restaurantId.current}`}
       />,
     ];
   else if (userType === "Staff")
@@ -55,6 +56,10 @@ const Dashboard = () => {
     ];
   else cards = [<h2 className="invalid-user">Invalid User!</h2>];
 
-  return <Layout>{<div className="card-container">{cards}</div>}</Layout>;
+  return (
+    <Layout>
+      <div className="card-container">{cards}</div>
+    </Layout>
+  );
 };
 export default Dashboard;

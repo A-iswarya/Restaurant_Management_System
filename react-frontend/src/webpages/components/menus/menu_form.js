@@ -153,7 +153,9 @@ const MenuForm = ({ edit }) => {
         <br />
         <button>{edit ? "EDIT" : "Create"}</button>
       </form>
-      {edit && <DeleteMenu restaurantId={restaurantId} menuId={menuId} />}
+      {edit && (
+        <DeleteMenu restaurantId={restaurantId.current} menuId={menuId} />
+      )}
     </div>
   );
 };

@@ -19,3 +19,7 @@ export const LOGIN = (userType) =>
 
 export const GET_MENUS = `${API_DOMAIN}/menus`;
 export const GET_SINGLE_MENU = (menuId) => `${API_DOMAIN}/menus/${menuId}`;
+
+export const GET_FEEDBACKS = `${API_DOMAIN}/feedbacks`;
+export const GET_SINGLE_FEEDBACK = (feedbackId) =>
+  `${API_DOMAIN}/menus/${feedbackId}`;

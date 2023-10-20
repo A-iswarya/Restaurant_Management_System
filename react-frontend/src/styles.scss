@@ -77,7 +77,8 @@ body {
 .addAdmin,
 .editAdmin,
 .addStaff,
-.addMenu {
+.addMenu,
+.addFeedback {
   h1 {
     font-size: 35px;
     font-weight: bold;
@@ -124,6 +125,10 @@ body {
   }
   span {
     color: red;
+  }
+
+  .feedback-textarea {
+    min-height: 200px;
   }
 }
 .dashboard {
@@ -323,4 +328,62 @@ body {
     padding: 10px;
     text-align: center;
   }
+}
+
+.feedback-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 20px;
+
+  .feedback {
+    display: block; /* Add this line */
+    justify-content: center;
+    align-items: center;
+    border: solid #19324b;
+    // background-color: $tertiary-color;
+    color: $primary-color;
+    border-radius: 10px;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+    margin: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-height: 150px;
+    max-height: 150px;
+
+    span {
+      font-size: 16px;
+      color: $secondary-color;
+      cursor: pointer;
+    }
+  }
+
+  .feedback-text {
+    font-size: 20px;
+  }
+  .feedback-edit {
+    text-align: right;
+    font-size: 20px;
+  }
+}
+.add-feedback-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.add-feedback {
+  margin-right: 20px;
+  margin-top: 10px;
+  font-size: 20px;
+  align-content: end;
+  background-color: $secondary-color;
+  color: $primary-color;
+  height: 40px;
+  width: 200px;
+  border-radius: 10px;
+  border: none;
+  font-weight: bold;
+  // font-weight: bold;
 }

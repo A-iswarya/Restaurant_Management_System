@@ -22,7 +22,7 @@ module Api
         if @feedback.save
           render json: { message: 'Feedback created successfully', data: @feedback }
         else
-          render json: { error: @staff.errors.full_messages.join(', ') }, status: :unauthorized
+          render json: { error: @feedback.errors.full_messages.join(', ') }, status: :unauthorized
         end
       rescue StandardError => e
         render json: { error: e.message }, status: :unauthorized
