@@ -22,6 +22,7 @@ const Dashboard = () => {
         key={"Manage Menu"}
         icon={<TfiLayoutMenuV />}
         title={"Manage Menu"}
+        navigateTo={`/menus?restaurant_id=${restaurantId.current}`}
       />,
       <Card
         key={"Manage Staffs"}

@@ -46,7 +46,7 @@ const Staffs = () => {
         <button className="add-staff-button" onClick={handleAddButtonClick}>
           Add Staff
         </button>
-        {error && <div className="error">{error}</div>}
+        {error && <div className="error">{error.message}</div>}
         {isLoaded && staffData.length !== 0 && (
           <table className="staff-table">
             <thead>

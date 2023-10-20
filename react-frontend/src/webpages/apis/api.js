@@ -16,3 +16,6 @@ export const GET_SINGLE_CUSTOMER = (customerId) =>
 
 export const LOGIN = (userType) =>
   `${API_DOMAIN}/${userType.toLowerCase()}s/login`;
+
+export const GET_MENUS = `${API_DOMAIN}/menus`;
+export const GET_SINGLE_MENU = (menuId) => `${API_DOMAIN}/menus/${menuId}`;

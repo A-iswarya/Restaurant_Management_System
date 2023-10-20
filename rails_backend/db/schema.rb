@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_15_101548) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_19_042117) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -36,6 +36,28 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_15_101548) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["table_id"], name: "index_customers_on_table_id"
+  end
+
+  create_table "menus", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "price"
+    t.text "description"
+    t.integer "cooking_time"
+    t.uuid "admin_id", null: false
+    t.uuid "staff_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_menus_on_admin_id"
+    t.index ["staff_id"], name: "index_menus_on_staff_id"
+  end
+
+  create_table "restaurant_customers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "restaurant_id", null: false
+    t.uuid "customer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer_id"], name: "index_restaurant_customers_on_customer_id"
+    t.index ["restaurant_id"], name: "index_restaurant_customers_on_restaurant_id"
   end
 
   create_table "restaurants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -73,6 +95,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_15_101548) do
 
   add_foreign_key "admins", "restaurants"
   add_foreign_key "customers", "tables"
+  add_foreign_key "menus", "admins"
+  add_foreign_key "menus", "staffs"
+  add_foreign_key "restaurant_customers", "customers"
+  add_foreign_key "restaurant_customers", "restaurants"
   add_foreign_key "staffs", "restaurants"
   add_foreign_key "tables", "restaurants"
   add_foreign_key "tables", "staffs"

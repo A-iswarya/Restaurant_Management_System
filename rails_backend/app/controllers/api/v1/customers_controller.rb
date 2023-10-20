@@ -19,11 +19,15 @@ module Api
 
       def create
         @customer = Customer.new(customer_params)
-        if @customer.save
-          generate_token
-          render json: { message: 'Customer created successfully', data: @customer, token: @token, user_type: 'Customer' }
-        else
-          render json: { error: @customer.errors.full_messages.join(', ') }, status: :unauthorized
+        ActiveRecord::Base.transaction do
+          if @customer.save
+            @customer.restaurant_customers.create(restaurant_id: params[:restaurant_id])
+            generate_token
+            render json: { message: 'Customer created successfully', data: @customer,
+                           token: @token, user_type: 'Customer' }
+          else
+            render json: { error: @customer.errors.full_messages.join(', ') }, status: :unauthorized
+          end
         end
       rescue StandardError => e
         render json: { error: e.message }, status: :unauthorized

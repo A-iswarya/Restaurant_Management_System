@@ -23,6 +23,8 @@
 class Customer < ApplicationRecord
   has_secure_password
   belongs_to :table, optional: true
+  has_many :restaurant_customers, dependent: :destroy
+  has_many :restaurants, through: :restaurant_customers
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true
 end

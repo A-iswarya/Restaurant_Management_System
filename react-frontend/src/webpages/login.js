@@ -49,7 +49,7 @@ const Login = () => {
     <Layout>
       <div className="login-container">
         <h2>Login</h2>
-        {error && <div className="error">{error}</div>}
+        {error && <div className="error">{error.message}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="username">Username</label>
@@ -101,7 +101,7 @@ const Login = () => {
           </div>
           <div className="password-options">
             <span className="forgot-password">Forgot Password?</span>
-            <Link to={"/customer/create"}>
+            <Link to={`/customer/create?restaurant_id=${restaurantId.current}`}>
               {" "}
               <span className="create-customer">Register</span>
             </Link>

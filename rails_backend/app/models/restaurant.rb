@@ -14,4 +14,6 @@
 #
 class Restaurant < ApplicationRecord
   has_one :admin
+  has_many :restaurant_customers, dependent: :destroy
+  has_many :customers, through: :restaurant_customers
 end

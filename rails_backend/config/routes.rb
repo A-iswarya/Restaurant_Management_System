@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       resources :customers do
         post '/login', to: 'authentication#login', on: :collection
       end
+      resources :menus
     end
   end
 end
