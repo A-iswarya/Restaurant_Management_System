@@ -3,7 +3,7 @@
 # Table name: orders
 #
 #  id         :uuid             not null, primary key
-#  status     :integer          default(0)
+#  status     :integer          default("placed")
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  staff_id   :uuid             not null
@@ -18,5 +18,9 @@
 #
 class Order < ApplicationRecord
   belongs_to :staff
+  has_many :menu_orders, dependent: :destroy
+  has_many :menus, through: :menu_orders
+  has_many :order_tables, dependent: :destroy
+  has_many :tables, through: :order_tables
   enum status: %i[placed in_progress ready_for_pickup out_for_delivery delivered]
 end

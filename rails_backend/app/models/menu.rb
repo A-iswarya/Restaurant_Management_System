@@ -25,4 +25,6 @@
 class Menu < ApplicationRecord
   belongs_to :admin
   belongs_to :staff
+  has_many :menu_orders, dependent: :destroy
+  has_many :orders, through: :menu_orders
 end

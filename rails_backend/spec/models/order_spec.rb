@@ -3,7 +3,7 @@
 # Table name: orders
 #
 #  id         :uuid             not null, primary key
-#  status     :integer          default(0)
+#  status     :integer          default("placed")
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  staff_id   :uuid             not null

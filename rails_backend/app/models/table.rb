@@ -23,4 +23,6 @@
 class Table < ApplicationRecord
   belongs_to :restaurant
   belongs_to :staff
+  has_many :order_tables, dependent: :destroy
+  has_many :orders, through: :order_tables
 end
