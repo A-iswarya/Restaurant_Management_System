@@ -70,7 +70,7 @@ const Layout = ({ children }) => {
         {userType && (
           <div className="user-info">
             <span className="user-type">
-              {capitalizeFirstLetters(userName)}
+              {userName && capitalizeFirstLetters(userName)}
             </span>
             <span className="edit-profile" onClick={handleEditProfile}>
               Edit Profile |
