@@ -49,6 +49,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_22_133602) do
   end
 
   create_table "menu_orders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "quantity"
     t.uuid "menu_id", null: false
     t.uuid "order_id", null: false
     t.datetime "created_at", null: false

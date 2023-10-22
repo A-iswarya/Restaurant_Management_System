@@ -3,6 +3,7 @@
 # Table name: menu_orders
 #
 #  id         :uuid             not null, primary key
+#  quantity   :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  menu_id    :uuid             not null

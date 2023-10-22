@@ -5,6 +5,7 @@ module Api
     # Feedback controller
     class FeedbacksController < ApplicationController
       before_action :find_feedback, only: %i[show update destroy]
+      before_action :check_customer
 
       def index
         @feedbacks = Feedback.all
@@ -58,6 +59,10 @@ module Api
 
       def find_feedback
         @feedback = Feedback.find_by_id(params[:id])
+      end
+
+      def check_customer
+        render json: { message: 'Please login as a Customer' } unless @current_user.is_a?(Customer)
       end
     end
   end
