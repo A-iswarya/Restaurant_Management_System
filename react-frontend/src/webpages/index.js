@@ -16,6 +16,7 @@ import CreateMenu from "./components/menus/create_menu";
 import EditMenu from "./components/menus/edit_menu";
 import Feedbacks from "./components/feedbacks";
 import CreateFeedback from "./components/feedbacks/create_feedback";
+import EditFeedback from "./components/feedbacks/edit_feedback";
 
 const Webpages = () => {
   return (
@@ -41,6 +42,7 @@ const Webpages = () => {
 
         <Route path="/feedbacks" element={<Feedbacks />} />
         <Route path="/feedbacks/create" element={<CreateFeedback />} />
+        <Route path="/feedbacks/:feedbackId/edit" element={<EditFeedback />} />
       </Routes>
     </BrowserRouter>
   );

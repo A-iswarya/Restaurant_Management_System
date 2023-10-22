@@ -3,6 +3,7 @@ import { GET_FEEDBACKS, GET_SINGLE_FEEDBACK } from "../../apis/api";
 
 import { GetIdFromUrl, getLocalStorageValue } from "../../helper";
 import { useNavigate, useParams } from "react-router-dom";
+import DeleteFeedback from "./delete_feedback";
 
 const FeedbackForm = ({ edit }) => {
   const userId = getLocalStorageValue("user_id");
@@ -83,7 +84,12 @@ const FeedbackForm = ({ edit }) => {
         <br />
         <button>{edit ? "EDIT" : "Add"}</button>
       </form>
-      {/* {edit && <DeleteMenu restaurantId={restaurantId} menuId={menuId} />} */}
+      {edit && (
+        <DeleteFeedback
+          restaurantId={restaurantId.current}
+          feedbackId={feedbackId}
+        />
+      )}
     </div>
   );
 };

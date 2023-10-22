@@ -22,4 +22,4 @@ export const GET_SINGLE_MENU = (menuId) => `${API_DOMAIN}/menus/${menuId}`;
 
 export const GET_FEEDBACKS = `${API_DOMAIN}/feedbacks`;
 export const GET_SINGLE_FEEDBACK = (feedbackId) =>
-  `${API_DOMAIN}/menus/${feedbackId}`;
+  `${API_DOMAIN}/feedbacks/${feedbackId}`;
