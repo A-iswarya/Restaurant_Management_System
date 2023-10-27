@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { GET_SINGLE_MENU, GET_MENUS, GET_STAFFS } from "../../apis/api";
 
-import { GetIdFromUrl, getLocalStorageValue } from "../../helper";
+import { GetIdFromUrl } from "../../helper";
 import { useNavigate, useParams } from "react-router-dom";
 import DeleteMenu from "./delete_menu";
 
 const MenuForm = ({ edit }) => {
-  const adminId = getLocalStorageValue("user_id");
   const restaurantId = useRef(GetIdFromUrl("restaurant_id"));
   const { menuId } = useParams();
   const navigate = useNavigate();
@@ -19,7 +18,7 @@ const MenuForm = ({ edit }) => {
     cooking_time: "",
     price: "",
     staff_id: "",
-    admin_id: adminId,
+    restaurant_id: restaurantId.current,
   });
   const [staffOptions, setStaffOptions] = useState([]);
 

@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 const DeleteMenu = ({ restaurantId, menuId }) => {
   const navigate = useNavigate();
-
   const handleDelete = async (e) => {
     e.preventDefault();
     try {
@@ -17,7 +16,7 @@ const DeleteMenu = ({ restaurantId, menuId }) => {
         },
       });
       if (response.ok) {
-        navigate(`/menus?restaurant_id=${restaurantId.current}`);
+        navigate(`/menus?restaurant_id=${restaurantId}`);
       } else console.log(`Menu Deletion Failed`);
     } catch {
       console.log("Something went wrong!");

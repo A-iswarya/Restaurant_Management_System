@@ -13,6 +13,8 @@ Rails.application.routes.draw do
       end
       resources :menus
       resources :feedbacks
+      resources :orders
+      resources :tables
     end
   end
 end

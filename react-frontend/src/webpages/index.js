@@ -17,6 +17,9 @@ import EditMenu from "./components/menus/edit_menu";
 import Feedbacks from "./components/feedbacks";
 import CreateFeedback from "./components/feedbacks/create_feedback";
 import EditFeedback from "./components/feedbacks/edit_feedback";
+import Orders from "./components/orders";
+import CreateOrder from "./components/orders/create_order";
+import EditOrder from "./components/orders/edit_order";
 
 const Webpages = () => {
   return (
@@ -27,22 +30,21 @@ const Webpages = () => {
         <Route path="/create" element={<CreateRestaurant />} />
         <Route path="/admin/create" element={<CreateAdmin />} />
         <Route path="/admin/:adminId/edit" element={<EditAdmin />} />
-
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/staffs" element={<Staffs />} />
         <Route path="/staff/create" element={<CreateStaff />} />
         <Route path="/staff/:staffId/edit" element={<EditStaff />} />
-
         <Route path="/customer/create" element={<CreateCustomer />} />
         <Route path="/customer/:customerId/edit" element={<EditCustomer />} />
-
         <Route path="/menus" element={<Menus />} />
         <Route path="/menus/create" element={<CreateMenu />} />
         <Route path="/menus/:menuId/edit" element={<EditMenu />} />
-
         <Route path="/feedbacks" element={<Feedbacks />} />
         <Route path="/feedbacks/create" element={<CreateFeedback />} />
         <Route path="/feedbacks/:feedbackId/edit" element={<EditFeedback />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/orders/create" element={<CreateOrder />} />
+        <Route path="/orders/:orderId/edit" element={<EditOrder />} />
       </Routes>
     </BrowserRouter>
   );

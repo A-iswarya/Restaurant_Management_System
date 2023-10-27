@@ -10,11 +10,11 @@ module Api
       def index
         @orders = Order.all
         @orders = @orders.where(staff_id: params[:staff_id]) if params[:staff_id].present?
-        render json: @orders
+        render json: @orders.map { |order| { order: order, tables: order.tables, menus: order.menus } }
       end
 
       def show
-        render json: @order
+        render json: { order: @order, tables: @order.tables, menus: @order.menus }
       end
 
       def create

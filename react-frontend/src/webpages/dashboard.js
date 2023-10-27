@@ -44,9 +44,10 @@ const Dashboard = () => {
   else if (userType === "Staff")
     cards = [
       <Card
-        key={"Take Order"}
+        key={"Manage Order"}
         icon={<MdOutlineBorderColor />}
-        title={"Take Order"}
+        title={"Manage Order"}
+        navigateTo={`/orders?restaurant_id=${restaurantId.current}`}
       />,
       <Card
         key={"Update Order Status"}
