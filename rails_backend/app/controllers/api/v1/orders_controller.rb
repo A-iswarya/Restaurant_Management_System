@@ -4,17 +4,17 @@ module Api
   module V1
     # Order controller
     class OrdersController < ApplicationController
-      before_action :find_staff, only: %i[show update destroy]
+      before_action :find_order, only: %i[show update destroy]
       before_action :check_staff
 
       def index
         @orders = Order.all
         @orders = @orders.where(staff_id: params[:staff_id]) if params[:staff_id].present?
-        render json: @orders.map { |order| { order: order, tables: order.tables, menus: order.menus } }
+        render json: @orders.map { |order| { order: order, tables: order.tables, menus: order.menu_data } }
       end
 
       def show
-        render json: { order: @order, tables: @order.tables, menus: @order.menus }
+        render json: { order: @order, tables: @order.tables, menus: @order.menu_data }
       end
 
       def create
@@ -39,6 +39,14 @@ module Api
       def update
         if @order
           @order.update(order_params)
+          @order.menu_orders.destroy_all
+          @order.order_tables.destroy_all
+          params[:menus].each do |menu|
+            @order.menu_orders.create(menu_id: menu[:menu_id], quantity: menu[:quantity])
+          end
+          params[:tables].each do |table|
+            @order.order_tables.create(table_id: table[:table_id])
+          end
           render json: { message: 'Order updated successfully', data: @order }
         else
           render json: { error: 'Order is not found' }, status: :unauthorized

@@ -12,6 +12,7 @@ import {
   getLocalStorageValue,
 } from "../../helper";
 import { useNavigate, useParams } from "react-router-dom";
+import DeleteOrder from "./delete_order";
 
 const OrderForm = ({ edit }) => {
   const { orderId } = useParams();
@@ -46,7 +47,15 @@ const OrderForm = ({ edit }) => {
         setFormData({
           ...formData,
           ...{
-            data,
+            tables: data.tables.map((table) => ({
+              table_id: table.id,
+            })),
+          },
+          ...{
+            menus: data.menus.map((menu) => ({
+              menu_id: menu.id,
+              quantity: menu.quantity,
+            })),
           },
         });
       } catch (error) {
@@ -233,6 +242,9 @@ const OrderForm = ({ edit }) => {
         <br />
         <button>{edit ? "EDIT" : "Create"}</button>
       </form>
+      {edit && (
+        <DeleteOrder restaurantId={restaurantId.current} orderId={orderId} />
+      )}
     </div>
   );
 };

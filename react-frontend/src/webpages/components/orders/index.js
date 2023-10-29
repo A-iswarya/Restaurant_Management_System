@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Layout from "../../layout";
 import { GET_ORDERS } from "../../apis/api";
 import { useNavigate, Link } from "react-router-dom";
-import { GetIdFromUrl } from "../../helper";
+import { GetIdFromUrl, capitalizeFirstLetters } from "../../helper";
 
 const Orders = () => {
   const [orderData, setOrderData] = useState([]);
@@ -54,6 +54,7 @@ const Orders = () => {
                 <th>Number</th>
                 <th>Menus</th>
                 <th>Tables</th>
+                <th>Status</th>
                 <th>Edit</th>
               </tr>
             </thead>
@@ -61,10 +62,20 @@ const Orders = () => {
               {orderData.map((order, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{order.menus.map((menu) => `${menu.name}\n`)}</td>
                   <td>
-                    {order.tables.map((table) => `${table.table_number}\n`)}
+                    {order.menus.map((menu, index) => (
+                      <div key={index}>
+                        {capitalizeFirstLetters(menu.name)}
+                        <span className="orderQuantity">[{menu.quantity}]</span>
+                      </div>
+                    ))}
                   </td>
+                  <td>
+                    {order.tables.map((table, index) => (
+                      <div key={index}>{table.table_number}</div>
+                    ))}
+                  </td>
+                  <td>{capitalizeFirstLetters(order.order.status)}</td>
                   <td>
                     <Link to={`/orders/${order.order.id}/edit`}>Edit</Link>
                   </td>

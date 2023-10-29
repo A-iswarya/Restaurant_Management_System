@@ -1,11 +1,11 @@
 import React from "react";
-// import EditForm from "./order_form";
+import EditForm from "./order_form";
 
 const EditOrder = () => {
   return (
     <div className="editAdmin">
       <h1>Edit Order</h1>
-      {/* <EditForm edit={true} /> */}
+      <EditForm edit={true} />
     </div>
   );
 };
