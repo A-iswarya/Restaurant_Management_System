@@ -31,8 +31,6 @@ const OrderForm = ({ edit }) => {
   const [tableData, setTableData] = useState([]);
   const [menuData, setMenuData] = useState([]);
 
-  const [total, setTotal] = useState(0);
-
   useEffect(() => {
     async function fetchData() {
       try {
@@ -104,7 +102,6 @@ const OrderForm = ({ edit }) => {
     fetchMenuData();
     if (edit) {
       fetchData();
-      setTotal(calculateTotal(formData.menus));
     }
   }, []);
 
@@ -131,17 +128,17 @@ const OrderForm = ({ edit }) => {
     }
   };
 
-  const calculateTotal = (updatedMenus) => {
-    let total = 0;
-    updatedMenus.forEach((menu) => {
+  const calculateTotal = () => {
+    let sum = 0;
+    formData.menus.forEach((menu) => {
       const menuItem = menuData.find(
         (menuItem) => menuItem.id === menu.menu_id
       );
       if (!(menuItem.length === 0)) {
-        total += menu.quantity * menuItem.price;
+        sum += menu.quantity * menuItem.price;
       }
     });
-    return total;
+    return sum;
   };
 
   const handleTableSelection = (e) => {
@@ -161,20 +158,17 @@ const OrderForm = ({ edit }) => {
   const handleMenuSelection = (e) => {
     const { name, value } = e.target;
     const intValue = Number(value);
-    const updatedMenus = [...formData.menus]; // Create a copy of the tables array
+    const updatedMenus = [...formData.menus]; // Create a copy of the menus array
     const index = updatedMenus.findIndex((menu) => menu.menu_id === name);
 
     if (index !== -1) {
       if (value <= 0) updatedMenus.splice(index, 1);
-      // If the menu is already selected, remove it
       else updatedMenus[index].quantity = intValue;
     } else {
       if (value <= 0) return;
-      // If it's not selected, add it
       else updatedMenus.push({ menu_id: name, quantity: intValue });
     }
     setFormData({ ...formData, menus: updatedMenus });
-    setTotal(calculateTotal(updatedMenus));
   };
 
   return (
@@ -236,7 +230,7 @@ const OrderForm = ({ edit }) => {
               <tr>
                 <td className="menuName">Total</td>
                 <td className="menuQuantity">
-                  <span>{total}</span>
+                  <span>{calculateTotal()}</span>
                 </td>
               </tr>
             </tbody>
