@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./home";
 import Login from "./login";
 import CreateRestaurant from "./components/restaurants/create_restaurant";
+import EditRestaurant from "./components/restaurants/edit_restaurant";
 import CreateAdmin from "./components/admins/create_admin";
 import EditAdmin from "./components/admins/edit_admin";
 import Dashboard from "./dashboard";
@@ -31,6 +32,10 @@ const Webpages = () => {
         <Route index element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/create" element={<CreateRestaurant />} />
+        <Route
+          path="/restaurants/:restaurantId/edit"
+          element={<EditRestaurant />}
+        />
         <Route path="/admin/create" element={<CreateAdmin />} />
         <Route path="/admin/:adminId/edit" element={<EditAdmin />} />
         <Route path="/dashboard" element={<Dashboard />} />

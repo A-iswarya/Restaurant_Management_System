@@ -6,6 +6,7 @@ import {
   MdOutlineBorderColor,
   MdOutlineManageAccounts,
   MdTableRestaurant,
+  MdOutlineModeEditOutline,
 } from "react-icons/md";
 import { PiCookingPotBold } from "react-icons/pi";
 import { GetIdFromUrl, getLocalStorageValue } from "./helper";
@@ -36,6 +37,12 @@ const Dashboard = () => {
         icon={<MdTableRestaurant />}
         title={"Manage Tables"}
         navigateTo={`/tables?restaurant_id=${restaurantId.current}`}
+      />,
+      <Card
+        key={"Edit Restaurant"}
+        icon={<MdOutlineModeEditOutline />}
+        title={"Edit Restaurant"}
+        navigateTo={`/restaurants/${restaurantId.current}/edit`}
       />,
     ];
   else if (userType === "Customer")
