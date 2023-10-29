@@ -30,4 +30,4 @@ export const POST_UPDATE_STATUS = (orderId) =>
 export const GET_SINGLE_ORDER = (orderId) => `${API_DOMAIN}/orders/${orderId}`;
 
 export const GET_TABLES = `${API_DOMAIN}/tables`;
-export const GET_SINGLE_TABLES = (tableId) => `${API_DOMAIN}/tables/${tableId}`;
+export const GET_SINGLE_TABLE = (tableId) => `${API_DOMAIN}/tables/${tableId}`;
