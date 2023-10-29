@@ -137,7 +137,7 @@ const OrderForm = ({ edit }) => {
       const menuItem = menuData.find(
         (menuItem) => menuItem.id === menu.menu_id
       );
-      if (menuItem) {
+      if (!(menuItem.length === 0)) {
         total += menu.quantity * menuItem.price;
       }
     });

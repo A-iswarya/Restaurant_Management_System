@@ -13,7 +13,9 @@ Rails.application.routes.draw do
       end
       resources :menus
       resources :feedbacks
-      resources :orders
+      resources :orders do
+        post '/update_status', to: 'orders#update_status', on: :member
+      end
       resources :tables
     end
   end

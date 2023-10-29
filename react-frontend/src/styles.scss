@@ -333,6 +333,19 @@ body {
     margin-left: 10px;
     color: red;
   }
+  .saveOrder {
+    text-decoration: underline;
+    cursor: pointer;
+    color: rgb(22, 22, 175);
+  }
+  select {
+    padding: 8px;
+    width: 31%;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: $bg-color;
+  }
 }
 
 .feedback-container {

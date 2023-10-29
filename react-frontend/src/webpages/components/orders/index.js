@@ -1,15 +1,25 @@
 import React, { useEffect, useState, useRef } from "react";
 import Layout from "../../layout";
-import { GET_ORDERS } from "../../apis/api";
+import { GET_ORDERS, POST_UPDATE_STATUS } from "../../apis/api";
 import { useNavigate, Link } from "react-router-dom";
 import { GetIdFromUrl, capitalizeFirstLetters } from "../../helper";
 
 const Orders = () => {
   const [orderData, setOrderData] = useState([]);
+  const [orderStatusData, setOrderStatusData] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const restaurantId = useRef(GetIdFromUrl("restaurant_id"));
+  const updateStatus = useRef(GetIdFromUrl("update_status"));
+
+  const statusMapping = {
+    placed: "Placed",
+    in_progress: "In Progress",
+    ready_for_pickup: "Ready for Pickup",
+    out_for_delivery: "Out for Delivery",
+    delivered: "Delivered",
+  };
 
   const handleAddButtonClick = () => {
     navigate(`/orders/create?restaurant_id=${restaurantId.current}`);
@@ -28,6 +38,12 @@ const Orders = () => {
         if (response.ok) {
           const data = await response.json();
           setOrderData(data);
+          setOrderStatusData(
+            data.map((order) => ({
+              id: order.order.id,
+              status: order.order.status,
+            }))
+          );
           setIsLoaded(true);
         } else {
           setError("Failed to fetch order data.");
@@ -43,6 +59,41 @@ const Orders = () => {
     let total = 0;
     order.menus.forEach((menu) => (total += menu.quantity * menu.price));
     return total;
+  };
+
+  const handleStatusChange = (e, orderId) => {
+    const value = e.target.value;
+
+    const updatedOrderStatusData = orderStatusData.map((order) => {
+      if (order.id === orderId) {
+        return { ...order, status: value };
+      }
+      return order;
+    });
+    setOrderStatusData(updatedOrderStatusData);
+    console.log(updatedOrderStatusData);
+  };
+
+  const handleUpdateStatus = async (orderId) => {
+    try {
+      const response = await fetch(POST_UPDATE_STATUS(orderId), {
+        method: "POST",
+        body: JSON.stringify(
+          orderStatusData.find((status) => status.id === orderId)
+        ),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          Authorization: localStorage.token,
+        },
+      });
+      if (response.ok) {
+        navigate(
+          `/orders?restaurant_id=${restaurantId.current}?update_status=true`
+        );
+      } else setError("Status updation failed");
+    } catch {
+      setError("Something went wrong!");
+    }
   };
   return (
     <Layout>
@@ -60,8 +111,8 @@ const Orders = () => {
                 <th>Menus</th>
                 <th>Tables</th>
                 <th>Status</th>
-                <th>Total</th>
-                <th>Edit</th>
+                {!updateStatus.current ? <th>Total</th> : null}
+                <th>{updateStatus.current ? "" : "Edit"}</th>
               </tr>
             </thead>
             <tbody>
@@ -81,10 +132,43 @@ const Orders = () => {
                       <div key={index}>{table.table_number}</div>
                     ))}
                   </td>
-                  <td>{capitalizeFirstLetters(order.order.status)}</td>
-                  <td>{calculateTotal(order)}</td>
                   <td>
-                    <Link to={`/orders/${order.order.id}/edit`}>Edit</Link>
+                    {!updateStatus.current ? (
+                      statusMapping[order.order.status]
+                    ) : (
+                      <select
+                        value={
+                          orderStatusData.find(
+                            (orderData) => orderData.id === order.order.id
+                          ).status
+                        }
+                        onChange={(e) => {
+                          handleStatusChange(e, order.order.id);
+                        }}
+                        name={order.order.id}
+                      >
+                        {Object.keys(statusMapping).map((key) => (
+                          <option key={key} value={key}>
+                            {statusMapping[key]}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                  </td>
+                  {!updateStatus.current ? (
+                    <td>{calculateTotal(order)}</td>
+                  ) : null}
+                  <td>
+                    {updateStatus.current ? (
+                      <span
+                        className="saveOrder"
+                        onClick={(e) => handleUpdateStatus(order.order.id)}
+                      >
+                        Save
+                      </span>
+                    ) : (
+                      <Link to={`/orders/${order.order.id}/edit`}>Edit</Link>
+                    )}
                   </td>
                 </tr>
               ))}

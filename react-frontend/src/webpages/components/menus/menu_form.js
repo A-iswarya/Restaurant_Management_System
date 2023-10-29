@@ -126,12 +126,13 @@ const MenuForm = ({ edit }) => {
           name="cooking_time"
         />
         <br />
-        <label>Price: </label>
+        <label>Price: {edit ? "" : <span>*</span>}</label>
         <input
           value={formData.price}
           type="text"
           onChange={handleChange}
           name="price"
+          required={!edit}
         />
         <br />
         <label>Staff:</label>

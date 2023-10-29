@@ -4,12 +4,13 @@ module Api
   module V1
     # Order controller
     class OrdersController < ApplicationController
-      before_action :find_order, only: %i[show update destroy]
+      before_action :find_order, only: %i[show update destroy update_status]
       before_action :check_staff
 
       def index
-        @orders = Order.all
-        @orders = @orders.where(staff_id: params[:staff_id]) if params[:staff_id].present?
+        @orders = Order.order(:created_at).all
+        @orders = @orders.where(staff_id: @current_user.id) unless @current_user.chef?
+        @orders = @orders.joins(menus: :staff).where('menus.staff_id=?', @current_user.id) if @current_user.chef?
         render json: @orders.map { |order| { order: order, tables: order.tables, menus: order.menu_data } }
       end
 
@@ -55,6 +56,17 @@ module Api
         render json: { error: e.message }, status: :unauthorized
       end
 
+      def update_status
+        if @order
+          @order.update_column(:status, params[:status])
+          render json: { message: 'Order status updated successfully', data: @order }
+        else
+          render json: { error: 'Order is not found' }, status: :unauthorized
+        end
+      rescue StandardError => e
+        render json: { error: e.message }, status: :unauthorized
+      end
+
       def destroy
         if @order
           @order.destroy
@@ -69,7 +81,7 @@ module Api
       private
 
       def order_params
-        params.permit(:status, :staff_id, :menus, :tables)
+        params.permit(:status, :staff_id, :menus, :tables, :status)
       end
 
       def find_order

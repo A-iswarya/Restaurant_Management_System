@@ -25,6 +25,8 @@ export const GET_SINGLE_FEEDBACK = (feedbackId) =>
   `${API_DOMAIN}/feedbacks/${feedbackId}`;
 
 export const GET_ORDERS = `${API_DOMAIN}/orders`;
+export const POST_UPDATE_STATUS = (orderId) =>
+  `${API_DOMAIN}/orders/${orderId}/update_status`;
 export const GET_SINGLE_ORDER = (orderId) => `${API_DOMAIN}/orders/${orderId}`;
 
 export const GET_TABLES = `${API_DOMAIN}/tables`;
