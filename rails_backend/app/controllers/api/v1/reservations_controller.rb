@@ -54,7 +54,7 @@ module Api
       private
 
       def reservation_params
-        params.permit(:text, :customer_id, :table_id)
+        params.permit(:time, :customer_id, :table_id)
       end
 
       def find_reservation

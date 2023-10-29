@@ -22,4 +22,18 @@
 class Reservation < ApplicationRecord
   belongs_to :customer
   belongs_to :table
+  validate :validate_time
+
+  def validate_time
+    if time < Time.now + 2.hour
+      errors.add(:time, 'must be at least 2 hours in the future')
+    end
+
+    conflicting_reservations = Reservation.where(table_id: table_id)
+                                          .where('time >= ? AND time <= ?', time - 1.hour, time + 1.hour)
+                                          .where.not(id: id)
+    if conflicting_reservations.present?
+      errors.add(:time, 'conflicting time with another reservation')
+    end
+  end
 end

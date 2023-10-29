@@ -34,3 +34,7 @@ export const GET_TABLES = `${API_DOMAIN}/tables`;
 export const POST_TABLE_UPDATE_STATUS = (tableId) =>
   `${API_DOMAIN}/tables/${tableId}/update_status`;
 export const GET_SINGLE_TABLE = (tableId) => `${API_DOMAIN}/tables/${tableId}`;
+
+export const GET_RESERVATIONS = `${API_DOMAIN}/reservations`;
+export const GET_SINGLE_RESERVATION = (reservationId) =>
+  `${API_DOMAIN}/reservations/${reservationId}`;

@@ -47,7 +47,12 @@ const Dashboard = () => {
     ];
   else if (userType === "Customer")
     cards = [
-      <Card key={"Book a Table"} icon={<MdDining />} title={"Book a Table"} />,
+      <Card
+        key={"Reserve a Table"}
+        icon={<MdDining />}
+        title={"Reserve a Table"}
+        navigateTo={`/reservations?restaurant_id=${restaurantId.current}`}
+      />,
       <Card
         key={"Add Feedback"}
         icon={<VscFeedback />}
