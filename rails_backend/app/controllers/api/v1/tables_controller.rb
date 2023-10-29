@@ -5,6 +5,7 @@ module Api
     # Table controller
     class TablesController < ApplicationController
       before_action :find_table, only: %i[show update destroy]
+      before_action :check_admin
       def index
         @tables = Table.all
         @tables = @tables.where(restaurant_id: params[:restaurant_id]) if params[:restaurant_id].present?
@@ -57,6 +58,10 @@ module Api
 
       def find_table
         @table = Table.find_by_id(params[:id])
+      end
+
+      def check_admin
+        render json: { message: 'Please login as an Admin'} unless @current_user.is_a?(Admin)
       end
     end
   end

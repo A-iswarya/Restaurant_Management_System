@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./home";
 import Login from "./login";
 import CreateRestaurant from "./components/restaurants/create_restaurant";
+import EditRestaurant from "./components/restaurants/edit_restaurant";
 import CreateAdmin from "./components/admins/create_admin";
 import EditAdmin from "./components/admins/edit_admin";
 import Dashboard from "./dashboard";
@@ -20,6 +21,9 @@ import EditFeedback from "./components/feedbacks/edit_feedback";
 import Orders from "./components/orders";
 import CreateOrder from "./components/orders/create_order";
 import EditOrder from "./components/orders/edit_order";
+import Tables from "./components/tables";
+import CreateTable from "./components/tables/create_table";
+import EditTable from "./components/tables/edit_table";
 
 const Webpages = () => {
   return (
@@ -28,6 +32,10 @@ const Webpages = () => {
         <Route index element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/create" element={<CreateRestaurant />} />
+        <Route
+          path="/restaurants/:restaurantId/edit"
+          element={<EditRestaurant />}
+        />
         <Route path="/admin/create" element={<CreateAdmin />} />
         <Route path="/admin/:adminId/edit" element={<EditAdmin />} />
         <Route path="/dashboard" element={<Dashboard />} />
@@ -45,6 +53,9 @@ const Webpages = () => {
         <Route path="/orders" element={<Orders />} />
         <Route path="/orders/create" element={<CreateOrder />} />
         <Route path="/orders/:orderId/edit" element={<EditOrder />} />
+        <Route path="/tables" element={<Tables />} />
+        <Route path="/tables/create" element={<CreateTable />} />
+        <Route path="/tables/:tableId/edit" element={<EditTable />} />
       </Routes>
     </BrowserRouter>
   );

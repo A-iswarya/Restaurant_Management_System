@@ -1,22 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
-import { GET_SINGLE_MENU, GET_MENUS, GET_STAFFS } from "../../apis/api";
+import { GET_SINGLE_TABLE, GET_TABLES, GET_STAFFS } from "../../apis/api";
 
 import { GetIdFromUrl } from "../../helper";
 import { useNavigate, useParams } from "react-router-dom";
-import DeleteMenu from "./delete_menu";
+import DeleteTable from "./delete_table";
 
-const MenuForm = ({ edit }) => {
+const TableForm = ({ edit }) => {
   const restaurantId = useRef(GetIdFromUrl("restaurant_id"));
-  const { menuId } = useParams();
+  const { tableId } = useParams();
   const navigate = useNavigate();
   const submitHttpCode = edit ? "PATCH" : "POST";
-  const submitApi = edit ? GET_SINGLE_MENU(menuId) : GET_MENUS;
+  const submitApi = edit ? GET_SINGLE_TABLE(tableId) : GET_TABLES;
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    cooking_time: "",
-    price: "",
+    table_number: "",
+    no_of_seats: "",
     staff_id: "",
     restaurant_id: restaurantId.current,
   });
@@ -25,7 +23,7 @@ const MenuForm = ({ edit }) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(GET_SINGLE_MENU(menuId), {
+        const response = await fetch(GET_SINGLE_TABLE(tableId), {
           method: "GET",
           headers: {
             "Content-type": "application/json; charset=UTF-8",
@@ -36,10 +34,8 @@ const MenuForm = ({ edit }) => {
         setFormData({
           ...formData,
           ...{
-            name: data.name,
-            description: data.description,
-            cooking_time: data.cooking_time,
-            price: data.price,
+            table_number: data.table_number,
+            no_of_seats: data.no_of_seats,
             staff_id: data.staff_id,
           },
         });
@@ -50,7 +46,7 @@ const MenuForm = ({ edit }) => {
     async function fetchStaff() {
       try {
         const response = await fetch(
-          `${GET_STAFFS(restaurantId.current)}&chef=true`,
+          `${GET_STAFFS(restaurantId.current)}&waitstaff=true`,
           {
             method: "GET",
             headers: {
@@ -83,8 +79,8 @@ const MenuForm = ({ edit }) => {
         },
       });
       if (response.ok) {
-        navigate(`/menus?restaurant_id=${restaurantId.current}`);
-      } else setError(`Menu ${edit ? "Updation" : "Creation"} Failed`);
+        navigate(`/tables?restaurant_id=${restaurantId.current}`);
+      } else setError(`Table ${edit ? "Updation" : "Creation"} Failed`);
     } catch {
       setError("Something went wrong!");
     }
@@ -100,42 +96,24 @@ const MenuForm = ({ edit }) => {
     <div>
       {error && <div className="error">{error}</div>}
       <form onSubmit={handleSubmit}>
-        <label>Name: {edit ? "" : <span>*</span>}</label>
+        <label>Table Number: {edit ? "" : <span>*</span>}</label>
         <input
-          value={formData.name}
-          type="text"
+          value={formData.table_number}
+          type="number"
           onChange={handleChange}
-          name="name"
+          name="table_number"
           required={true}
         />
         <br />
-        <label>Description: </label>
+        <label>No of Seats: {edit ? "" : <span>*</span>}</label>
         <textarea
-          value={formData.description}
-          type="text"
+          value={formData.no_of_seats}
+          type="number"
           onChange={handleChange}
-          name="description"
+          name="no_of_seats"
         />
         <br />
-
-        <label>Cooking Time: </label>
-        <input
-          value={formData.cooking_time}
-          type="text"
-          onChange={handleChange}
-          name="cooking_time"
-        />
-        <br />
-        <label>Price: {edit ? "" : <span>*</span>}</label>
-        <input
-          value={formData.price}
-          type="text"
-          onChange={handleChange}
-          name="price"
-          required={true}
-        />
-        <br />
-        <label>Staff:</label>
+        <label>Staff In Charge:</label>
         <select
           value={formData.staff_id}
           onChange={handleChange}
@@ -154,10 +132,10 @@ const MenuForm = ({ edit }) => {
         <button>{edit ? "EDIT" : "Create"}</button>
       </form>
       {edit && (
-        <DeleteMenu restaurantId={restaurantId.current} menuId={menuId} />
+        <DeleteTable restaurantId={restaurantId.current} tableId={tableId} />
       )}
     </div>
   );
 };
 
-export default MenuForm;
+export default TableForm;

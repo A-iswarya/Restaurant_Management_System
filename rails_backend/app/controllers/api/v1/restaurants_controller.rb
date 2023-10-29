@@ -6,6 +6,8 @@ module Api
     class RestaurantsController < ApplicationController
       skip_before_action :authenticate_user, only: %i[index create]
       before_action :find_restaurant, only: %i[show update destroy]
+      before_action :check_admin, only: %i[show update destroy]
+
       def index
         @restaurants = Restaurant.all
         render json: @restaurants
@@ -56,6 +58,10 @@ module Api
 
       def find_restaurant
         @restaurant = Restaurant.find_by_id(params[:id])
+      end
+
+      def check_admin
+        render json: { message: 'Please login as an Admin'} unless @current_user.is_a?(Admin)
       end
     end
   end
