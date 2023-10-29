@@ -1,14 +1,14 @@
 import React from "react";
 import { AiOutlineDelete } from "react-icons/ai";
-import { GET_SINGLE_MENU } from "../../apis/api";
+import { GET_SINGLE_ORDER } from "../../apis/api";
 import { useNavigate } from "react-router-dom";
 
-const DeleteMenu = ({ restaurantId, menuId }) => {
+const DeleteOrder = ({ restaurantId, orderId }) => {
   const navigate = useNavigate();
   const handleDelete = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(GET_SINGLE_MENU(menuId), {
+      const response = await fetch(GET_SINGLE_ORDER(orderId), {
         method: "DELETE",
         headers: {
           "Content-type": "application/json; charset=UTF-8",
@@ -16,8 +16,8 @@ const DeleteMenu = ({ restaurantId, menuId }) => {
         },
       });
       if (response.ok) {
-        navigate(`/menus?restaurant_id=${restaurantId}`);
-      } else console.log(`Menu Deletion Failed`);
+        navigate(`/orders?restaurant_id=${restaurantId}`);
+      } else console.log(`Order Deletion Failed`);
     } catch {
       console.log("Something went wrong!");
     }
@@ -26,11 +26,11 @@ const DeleteMenu = ({ restaurantId, menuId }) => {
   return (
     <div className="deleteAdmin">
       <span onClick={handleDelete}>
-        Delete Menu
+        Delete Order
         <AiOutlineDelete className="icon" />
       </span>
     </div>
   );
 };
 
-export default DeleteMenu;
+export default DeleteOrder;

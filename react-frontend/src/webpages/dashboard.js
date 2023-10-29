@@ -44,14 +44,16 @@ const Dashboard = () => {
   else if (userType === "Staff")
     cards = [
       <Card
-        key={"Take Order"}
+        key={"Manage Order"}
         icon={<MdOutlineBorderColor />}
-        title={"Take Order"}
+        title={"Manage Order"}
+        navigateTo={`/orders?restaurant_id=${restaurantId.current}`}
       />,
       <Card
         key={"Update Order Status"}
         icon={<PiCookingPotBold />}
         title={"Update Order Status"}
+        navigateTo={`/orders?restaurant_id=${restaurantId.current}?update_status=true`}
       />,
     ];
   else cards = [<h2 className="invalid-user">Invalid User!</h2>];

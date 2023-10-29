@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_20_031038) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_22_133602) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -48,17 +48,44 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_20_031038) do
     t.index ["restaurant_id"], name: "index_feedbacks_on_restaurant_id"
   end
 
+  create_table "menu_orders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "quantity"
+    t.uuid "menu_id", null: false
+    t.uuid "order_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["menu_id"], name: "index_menu_orders_on_menu_id"
+    t.index ["order_id"], name: "index_menu_orders_on_order_id"
+  end
+
   create_table "menus", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.integer "price"
     t.text "description"
     t.integer "cooking_time"
-    t.uuid "admin_id", null: false
+    t.uuid "restaurant_id", null: false
     t.uuid "staff_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["admin_id"], name: "index_menus_on_admin_id"
+    t.index ["restaurant_id"], name: "index_menus_on_restaurant_id"
     t.index ["staff_id"], name: "index_menus_on_staff_id"
+  end
+
+  create_table "order_tables", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "order_id", null: false
+    t.uuid "table_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_tables_on_order_id"
+    t.index ["table_id"], name: "index_order_tables_on_table_id"
+  end
+
+  create_table "orders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "status", default: 0
+    t.uuid "staff_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["staff_id"], name: "index_orders_on_staff_id"
   end
 
   create_table "restaurant_customers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -107,8 +134,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_20_031038) do
   add_foreign_key "customers", "tables"
   add_foreign_key "feedbacks", "customers"
   add_foreign_key "feedbacks", "restaurants"
-  add_foreign_key "menus", "admins"
+  add_foreign_key "menu_orders", "menus"
+  add_foreign_key "menu_orders", "orders"
+  add_foreign_key "menus", "restaurants"
   add_foreign_key "menus", "staffs"
+  add_foreign_key "order_tables", "orders"
+  add_foreign_key "order_tables", "tables"
+  add_foreign_key "orders", "staffs"
   add_foreign_key "restaurant_customers", "customers"
   add_foreign_key "restaurant_customers", "restaurants"
   add_foreign_key "staffs", "restaurants"

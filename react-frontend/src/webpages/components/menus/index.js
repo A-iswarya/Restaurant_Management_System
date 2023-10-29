@@ -19,13 +19,16 @@ const Menus = () => {
   useEffect(() => {
     async function fetchMenuData() {
       try {
-        const response = await fetch(GET_MENUS, {
-          method: "GET",
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-            Authorization: localStorage.token,
-          },
-        });
+        const response = await fetch(
+          `${GET_MENUS}?restaurant_id=${restaurantId.current}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-type": "application/json; charset=UTF-8",
+              Authorization: localStorage.token,
+            },
+          }
+        );
         if (response.ok) {
           const data = await response.json();
           setMenuData(data);

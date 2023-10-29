@@ -23,3 +23,11 @@ export const GET_SINGLE_MENU = (menuId) => `${API_DOMAIN}/menus/${menuId}`;
 export const GET_FEEDBACKS = `${API_DOMAIN}/feedbacks`;
 export const GET_SINGLE_FEEDBACK = (feedbackId) =>
   `${API_DOMAIN}/feedbacks/${feedbackId}`;
+
+export const GET_ORDERS = `${API_DOMAIN}/orders`;
+export const POST_UPDATE_STATUS = (orderId) =>
+  `${API_DOMAIN}/orders/${orderId}/update_status`;
+export const GET_SINGLE_ORDER = (orderId) => `${API_DOMAIN}/orders/${orderId}`;
+
+export const GET_TABLES = `${API_DOMAIN}/tables`;
+export const GET_SINGLE_TABLES = (tableId) => `${API_DOMAIN}/tables/${tableId}`;
