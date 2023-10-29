@@ -67,7 +67,13 @@ const Dashboard = () => {
         key={"Update Order Status"}
         icon={<PiCookingPotBold />}
         title={"Update Order Status"}
-        navigateTo={`/orders?restaurant_id=${restaurantId.current}?update_status=true`}
+        navigateTo={`/orders?restaurant_id=${restaurantId.current}&update_status=true`}
+      />,
+      <Card
+        key={"Update Table Status"}
+        icon={<MdTableRestaurant />}
+        title={"Update Table Status"}
+        navigateTo={`/tables?restaurant_id=${restaurantId.current}&update_status=true`}
       />,
     ];
   else cards = [<h2 className="invalid-user">Invalid User!</h2>];

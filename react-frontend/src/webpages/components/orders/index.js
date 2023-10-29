@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Layout from "../../layout";
-import { GET_ORDERS, POST_UPDATE_STATUS } from "../../apis/api";
+import { GET_ORDERS, POST_ORDER_UPDATE_STATUS } from "../../apis/api";
 import { useNavigate, Link } from "react-router-dom";
 import { GetIdFromUrl, capitalizeFirstLetters } from "../../helper";
 
@@ -76,7 +76,7 @@ const Orders = () => {
 
   const handleUpdateStatus = async (orderId) => {
     try {
-      const response = await fetch(POST_UPDATE_STATUS(orderId), {
+      const response = await fetch(POST_ORDER_UPDATE_STATUS(orderId), {
         method: "POST",
         body: JSON.stringify(
           orderStatusData.find((status) => status.id === orderId)
@@ -112,7 +112,7 @@ const Orders = () => {
                 <th>Tables</th>
                 <th>Status</th>
                 {!updateStatus.current ? <th>Total</th> : null}
-                <th>{updateStatus.current ? "" : "Edit"}</th>
+                <th>{updateStatus.current ? "Save" : "Edit"}</th>
               </tr>
             </thead>
             <tbody>
