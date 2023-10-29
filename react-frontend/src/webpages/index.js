@@ -24,6 +24,9 @@ import EditOrder from "./components/orders/edit_order";
 import Tables from "./components/tables";
 import CreateTable from "./components/tables/create_table";
 import EditTable from "./components/tables/edit_table";
+import Reservations from "./components/reservations";
+import CreateReservation from "./components/reservations/create_reservation";
+import EditReservation from "./components/reservations/edit_reservation";
 
 const Webpages = () => {
   return (
@@ -56,6 +59,12 @@ const Webpages = () => {
         <Route path="/tables" element={<Tables />} />
         <Route path="/tables/create" element={<CreateTable />} />
         <Route path="/tables/:tableId/edit" element={<EditTable />} />
+        <Route path="/reservations" element={<Reservations />} />
+        <Route path="/reservations/create" element={<CreateReservation />} />
+        <Route
+          path="/reservations/:reservationId/edit"
+          element={<EditReservation />}
+        />
       </Routes>
     </BrowserRouter>
   );

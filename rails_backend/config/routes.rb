@@ -13,10 +13,13 @@ Rails.application.routes.draw do
       end
       resources :menus
       resources :feedbacks
+      resources :reservations
       resources :orders do
         post '/update_status', to: 'orders#update_status', on: :member
       end
-      resources :tables
+      resources :tables do
+        post '/update_status', to: 'tables#update_status', on: :member
+      end
     end
   end
 end

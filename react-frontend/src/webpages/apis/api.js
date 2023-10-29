@@ -26,9 +26,15 @@ export const GET_SINGLE_FEEDBACK = (feedbackId) =>
   `${API_DOMAIN}/feedbacks/${feedbackId}`;
 
 export const GET_ORDERS = `${API_DOMAIN}/orders`;
-export const POST_UPDATE_STATUS = (orderId) =>
+export const POST_ORDER_UPDATE_STATUS = (orderId) =>
   `${API_DOMAIN}/orders/${orderId}/update_status`;
 export const GET_SINGLE_ORDER = (orderId) => `${API_DOMAIN}/orders/${orderId}`;
 
 export const GET_TABLES = `${API_DOMAIN}/tables`;
+export const POST_TABLE_UPDATE_STATUS = (tableId) =>
+  `${API_DOMAIN}/tables/${tableId}/update_status`;
 export const GET_SINGLE_TABLE = (tableId) => `${API_DOMAIN}/tables/${tableId}`;
+
+export const GET_RESERVATIONS = `${API_DOMAIN}/reservations`;
+export const GET_SINGLE_RESERVATION = (reservationId) =>
+  `${API_DOMAIN}/reservations/${reservationId}`;

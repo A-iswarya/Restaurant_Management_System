@@ -121,7 +121,7 @@ const OrderForm = ({ edit }) => {
         },
       });
       if (response.ok) {
-        navigate("/orders");
+        navigate(`/orders?restaurant_id=${restaurantId.current}`);
       } else setError(`Menu ${edit ? "Updation" : "Creation"} Failed`);
     } catch {
       setError("Something went wrong!");

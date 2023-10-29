@@ -8,6 +8,8 @@ import {
   MdTableRestaurant,
   MdOutlineModeEditOutline,
 } from "react-icons/md";
+
+import { HiViewList } from "react-icons/hi";
 import { PiCookingPotBold } from "react-icons/pi";
 import { GetIdFromUrl, getLocalStorageValue } from "./helper";
 import Card from "./components/card";
@@ -47,7 +49,12 @@ const Dashboard = () => {
     ];
   else if (userType === "Customer")
     cards = [
-      <Card key={"Book a Table"} icon={<MdDining />} title={"Book a Table"} />,
+      <Card
+        key={"Reserve a Table"}
+        icon={<MdDining />}
+        title={"Reserve a Table"}
+        navigateTo={`/reservations?restaurant_id=${restaurantId.current}`}
+      />,
       <Card
         key={"Add Feedback"}
         icon={<VscFeedback />}
@@ -67,7 +74,19 @@ const Dashboard = () => {
         key={"Update Order Status"}
         icon={<PiCookingPotBold />}
         title={"Update Order Status"}
-        navigateTo={`/orders?restaurant_id=${restaurantId.current}?update_status=true`}
+        navigateTo={`/orders?restaurant_id=${restaurantId.current}&update_status=true`}
+      />,
+      <Card
+        key={"Update Table Status"}
+        icon={<MdTableRestaurant />}
+        title={"Update Table Status"}
+        navigateTo={`/tables?restaurant_id=${restaurantId.current}&update_status=true`}
+      />,
+      <Card
+        key={"View Reservations"}
+        icon={<HiViewList />}
+        title={"View Reservations"}
+        navigateTo={`/reservations?restaurant_id=${restaurantId.current}&view_only=true`}
       />,
     ];
   else cards = [<h2 className="invalid-user">Invalid User!</h2>];

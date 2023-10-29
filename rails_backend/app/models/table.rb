@@ -4,6 +4,7 @@
 #
 #  id            :uuid             not null, primary key
 #  no_of_seats   :integer
+#  status        :integer          default("free")
 #  table_number  :integer
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
@@ -25,4 +26,7 @@ class Table < ApplicationRecord
   belongs_to :staff
   has_many :order_tables, dependent: :destroy
   has_many :orders, through: :order_tables
+  has_many :reservations, dependent: :destroy
+
+  enum status: %i[free reserved occupied]
 end

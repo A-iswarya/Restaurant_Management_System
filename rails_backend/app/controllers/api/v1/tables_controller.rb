@@ -4,8 +4,7 @@ module Api
   module V1
     # Table controller
     class TablesController < ApplicationController
-      before_action :find_table, only: %i[show update destroy]
-      before_action :check_admin
+      before_action :find_table, only: %i[show update destroy update_status]
       def index
         @tables = Table.all
         @tables = @tables.where(restaurant_id: params[:restaurant_id]) if params[:restaurant_id].present?
@@ -39,6 +38,17 @@ module Api
         render json: { error: e.message }, status: :unauthorized
       end
 
+      def update_status
+        if @table
+          @table.update_column(:status, params[:status])
+          render json: { message: 'Table status updated successfully', data: @table }
+        else
+          render json: { error: 'Table is not found' }, status: :unauthorized
+        end
+      rescue StandardError => e
+        render json: { error: e.message }, status: :unauthorized
+      end
+
       def destroy
         if @table
           @table.destroy
@@ -58,10 +68,6 @@ module Api
 
       def find_table
         @table = Table.find_by_id(params[:id])
-      end
-
-      def check_admin
-        render json: { message: 'Please login as an Admin'} unless @current_user.is_a?(Admin)
       end
     end
   end
