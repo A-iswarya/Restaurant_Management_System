@@ -8,6 +8,8 @@ import {
   MdTableRestaurant,
   MdOutlineModeEditOutline,
 } from "react-icons/md";
+
+import { HiViewList } from "react-icons/hi";
 import { PiCookingPotBold } from "react-icons/pi";
 import { GetIdFromUrl, getLocalStorageValue } from "./helper";
 import Card from "./components/card";
@@ -79,6 +81,12 @@ const Dashboard = () => {
         icon={<MdTableRestaurant />}
         title={"Update Table Status"}
         navigateTo={`/tables?restaurant_id=${restaurantId.current}&update_status=true`}
+      />,
+      <Card
+        key={"View Reservations"}
+        icon={<HiViewList />}
+        title={"View Reservations"}
+        navigateTo={`/reservations?restaurant_id=${restaurantId.current}&view_only=true`}
       />,
     ];
   else cards = [<h2 className="invalid-user">Invalid User!</h2>];

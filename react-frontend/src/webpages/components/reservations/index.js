@@ -11,6 +11,7 @@ const Reservations = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const restaurantId = useRef(GetIdFromUrl("restaurant_id"));
+  const viewOnly = useRef(GetIdFromUrl("view_only"));
 
   const handleAddButtonClick = () => {
     navigate(`/reservations/create?restaurant_id=${restaurantId.current}`);
@@ -67,10 +68,12 @@ const Reservations = () => {
   return (
     <Layout>
       <div className="staffs-container">
-        <h1>Reserve a Table</h1>
-        <button className="add-staff-button" onClick={handleAddButtonClick}>
-          Book
-        </button>
+        <h1>{viewOnly.current ? "Reservations" : "Reserve a Table"}</h1>
+        {viewOnly.current ? null : (
+          <button className="add-staff-button" onClick={handleAddButtonClick}>
+            Book
+          </button>
+        )}
         {error && <div className="error">{error.message}</div>}
         {isLoaded && reservationData.length !== 0 && (
           <table className="staff-table">
@@ -79,7 +82,7 @@ const Reservations = () => {
                 <th>Number</th>
                 <th>Table Number</th>
                 <th>Time</th>
-                <th>Edit</th>
+                {viewOnly.current ? null : <th>Edit</th>}
               </tr>
             </thead>
             <tbody>
@@ -88,11 +91,13 @@ const Reservations = () => {
                   <td>{index + 1}</td>
                   <td>{tableData[reservation.table_id]}</td>
                   <td>{new Date(reservation.time).toLocaleString()}</td>
-                  <td>
-                    <Link to={`/reservations/${reservation.id}/edit`}>
-                      Edit
-                    </Link>
-                  </td>
+                  {viewOnly.current ? null : (
+                    <td>
+                      <Link to={`/reservations/${reservation.id}/edit`}>
+                        Edit
+                      </Link>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
