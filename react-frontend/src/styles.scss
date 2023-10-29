@@ -389,3 +389,63 @@ body {
   cursor: pointer;
   // font-weight: bold;
 }
+.tableSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-bottom: 1px solid $primary-color;
+
+  label {
+    font-weight: bold;
+  }
+  input {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    margin-right: 5px;
+  }
+  .checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 500px; /* Set a maximum width to contain 3 checkboxes in a row */
+    margin-top: 10px;
+  }
+
+  .checkboxes label {
+    margin-right: 20px; /* Spacing between checkboxes */
+  }
+}
+
+.menuSection {
+  width: 500px;
+
+  .fixed-size-table {
+    width: 100%; /* Make the table expand to the full width of its container */
+    table-layout: fixed; /* Set the table layout to fixed */
+  }
+
+  .fixed-size-table th,
+  .fixed-size-table td {
+    white-space: nowrap; /* Prevent text from wrapping in cells */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Add ellipsis (...) for overflowing content */
+  }
+
+  .menuName {
+    text-align: right;
+  }
+  .menuQuantity {
+    margin-left: 10px;
+    display: flex;
+    align-items: flex-start;
+  }
+  span {
+    font-size: 20px;
+  }
+}
+
+.title {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
