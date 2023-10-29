@@ -37,6 +37,14 @@ const Layout = ({ children }) => {
     );
   };
 
+  const handleHome = () => {
+    navigate(
+      `/dashboard?restaurant_id=${
+        restaurantId.current
+      }&${userType.toLowerCase()}_id=${userId}`
+    );
+  };
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -71,6 +79,9 @@ const Layout = ({ children }) => {
           <div className="user-info">
             <span className="user-type">
               {userName && capitalizeFirstLetters(userName)}
+            </span>
+            <span className="edit-profile" onClick={handleHome}>
+              Home |
             </span>
             <span className="edit-profile" onClick={handleEditProfile}>
               Edit Profile |
