@@ -169,7 +169,7 @@ const Form = ({ edit, isAdmin, isStaff, isCustomer }) => {
               type="text"
               onChange={handleChange}
               name="name"
-              required={!edit && isStaff}
+              required={isStaff}
             />
             <br />
           </>
@@ -180,7 +180,7 @@ const Form = ({ edit, isAdmin, isStaff, isCustomer }) => {
           type="text"
           onChange={handleChange}
           name="username"
-          required={!edit}
+          required={true}
         />
         <br />
         {isStaff && (

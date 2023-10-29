@@ -106,7 +106,7 @@ const MenuForm = ({ edit }) => {
           type="text"
           onChange={handleChange}
           name="name"
-          required={!edit}
+          required={true}
         />
         <br />
         <label>Description: </label>
@@ -132,7 +132,7 @@ const MenuForm = ({ edit }) => {
           type="text"
           onChange={handleChange}
           name="price"
-          required={!edit}
+          required={true}
         />
         <br />
         <label>Staff:</label>

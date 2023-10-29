@@ -3,7 +3,7 @@ import { GET_SINGLE_TABLE, GET_TABLES, GET_STAFFS } from "../../apis/api";
 
 import { GetIdFromUrl } from "../../helper";
 import { useNavigate, useParams } from "react-router-dom";
-// import DeleteTable from "./delete_table";
+import DeleteTable from "./delete_table";
 
 const TableForm = ({ edit }) => {
   const restaurantId = useRef(GetIdFromUrl("restaurant_id"));
@@ -102,7 +102,7 @@ const TableForm = ({ edit }) => {
           type="number"
           onChange={handleChange}
           name="table_number"
-          required={!edit}
+          required={true}
         />
         <br />
         <label>No of Seats: {edit ? "" : <span>*</span>}</label>
@@ -131,9 +131,9 @@ const TableForm = ({ edit }) => {
         <br />
         <button>{edit ? "EDIT" : "Create"}</button>
       </form>
-      {/* {edit && (
-        <DeleteMenu restaurantId={restaurantId.current} menuId={menuId} />
-      )} */}
+      {edit && (
+        <DeleteTable restaurantId={restaurantId.current} tableId={tableId} />
+      )}
     </div>
   );
 };
