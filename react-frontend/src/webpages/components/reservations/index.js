@@ -87,7 +87,7 @@ const Reservations = () => {
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{tableData[reservation.table_id]}</td>
-                  <td>{reservation.time}</td>
+                  <td>{new Date(reservation.time).toLocaleString()}</td>
                   <td>
                     <Link to={`/reservations/${reservation.id}/edit`}>
                       Edit

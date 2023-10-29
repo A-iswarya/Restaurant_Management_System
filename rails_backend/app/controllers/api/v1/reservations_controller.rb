@@ -8,7 +8,7 @@ module Api
       before_action :check_customer
 
       def index
-        @reservations = Reservation.all
+        @reservations = Reservation.all.order(:time)
         @reservations = @reservations.where(customer_id: params[:customer_id]) if params[:customer_id].present?
         @reservations = @reservations.where(table_id: params[:table_id]) if params[:table_id].present?
         render json: @reservations
