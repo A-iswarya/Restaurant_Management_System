@@ -39,6 +39,11 @@ const Orders = () => {
     fetchData();
   }, []);
 
+  const calculateTotal = (order) => {
+    let total = 0;
+    order.menus.forEach((menu) => (total += menu.quantity * menu.price));
+    return total;
+  };
   return (
     <Layout>
       <div className="staffs-container">
@@ -55,6 +60,7 @@ const Orders = () => {
                 <th>Menus</th>
                 <th>Tables</th>
                 <th>Status</th>
+                <th>Total</th>
                 <th>Edit</th>
               </tr>
             </thead>
@@ -76,6 +82,7 @@ const Orders = () => {
                     ))}
                   </td>
                   <td>{capitalizeFirstLetters(order.order.status)}</td>
+                  <td>{calculateTotal(order)}</td>
                   <td>
                     <Link to={`/orders/${order.order.id}/edit`}>Edit</Link>
                   </td>

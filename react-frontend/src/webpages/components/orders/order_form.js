@@ -104,11 +104,16 @@ const OrderForm = ({ edit }) => {
     fetchMenuData();
     if (edit) {
       fetchData();
+      setTotal(calculateTotal(formData.menus));
     }
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.tables.length === 0 || formData.menus.length === 0) {
+      setError("Add Tables and Menus");
+      return;
+    }
     try {
       const response = await fetch(submitApi, {
         method: submitHttpCode,
