@@ -26,6 +26,7 @@ class Customer < ApplicationRecord
   has_many :restaurant_customers, dependent: :destroy
   has_many :restaurants, through: :restaurant_customers
   has_many :feedbacks, dependent: :destroy
+  has_many :reservations, dependent: :destroy
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true
 end
