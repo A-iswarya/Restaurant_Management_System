@@ -20,6 +20,7 @@ import EditFeedback from "./components/feedbacks/edit_feedback";
 import Orders from "./components/orders";
 import CreateOrder from "./components/orders/create_order";
 import EditOrder from "./components/orders/edit_order";
+import Tables from "./components/tables";
 
 const Webpages = () => {
   return (
@@ -45,6 +46,9 @@ const Webpages = () => {
         <Route path="/orders" element={<Orders />} />
         <Route path="/orders/create" element={<CreateOrder />} />
         <Route path="/orders/:orderId/edit" element={<EditOrder />} />
+        <Route path="/tables" element={<Tables />} />
+        {/* <Route path="/tables/create" element={<CreateTable />} />
+        <Route path="/tables/:tableId/edit" element={<EditTable />} /> */}
       </Routes>
     </BrowserRouter>
   );

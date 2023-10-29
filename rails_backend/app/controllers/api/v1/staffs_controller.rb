@@ -10,6 +10,7 @@ module Api
         @staffs = Staff.all
         @staffs = @staffs.where(restaurant_id: params[:restaurant_id]) if params[:restaurant_id].present?
         @staffs = @staffs.chefs if params[:chef].present?
+        @staffs = @staffs.waitstaffs if params[:waitstaff].present?
         render json: @staffs
       end
 

@@ -27,5 +27,7 @@ class Staff < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true
   scope :chefs, -> { where(designation: 'chef') }
+  scope :waitstaffs, -> { where(designation: 'waitstaff') }
+
   enum designation: %i[waitstaff chef]
 end
