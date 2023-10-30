@@ -27,3 +27,17 @@ export const capitalizeFirstLetters = (str) => {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
     .join(" "); // Join the words back into a single string
 };
+
+export const formatTime = (datetime) => {
+  const date = new Date(datetime);
+
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  const hours = String(date.getUTCHours()).padStart(2, "0");
+  const minutes = String(date.getUTCMinutes()).padStart(2, "0");
+
+  const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
+
+  return formattedDate;
+};

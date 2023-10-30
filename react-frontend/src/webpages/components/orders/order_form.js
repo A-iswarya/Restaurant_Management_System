@@ -107,7 +107,7 @@ const OrderForm = ({ edit }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.tables.length === 0 || formData.menus.length === 0) {
+    if (formData.tables?.length === 0 || formData.menus?.length === 0) {
       setError("Add Tables and Menus");
       return;
     }
@@ -134,7 +134,7 @@ const OrderForm = ({ edit }) => {
       const menuItem = menuData.find(
         (menuItem) => menuItem.id === menu.menu_id
       );
-      if (!(menuItem.length === 0)) {
+      if (!(menuItem?.length === 0)) {
         sum += menu.quantity * menuItem.price;
       }
     });

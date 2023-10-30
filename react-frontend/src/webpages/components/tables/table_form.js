@@ -106,11 +106,12 @@ const TableForm = ({ edit }) => {
         />
         <br />
         <label>No of Seats: {edit ? "" : <span>*</span>}</label>
-        <textarea
+        <input
           value={formData.no_of_seats}
           type="number"
           onChange={handleChange}
           name="no_of_seats"
+          required={true}
         />
         <br />
         <label>Staff In Charge:</label>

@@ -5,7 +5,7 @@ import {
   GET_TABLES,
 } from "../../apis/api";
 
-import { GetIdFromUrl, getLocalStorageValue } from "../../helper";
+import { GetIdFromUrl, getLocalStorageValue, formatTime } from "../../helper";
 import { useNavigate, useParams } from "react-router-dom";
 import DeleteReservation from "./delete_reservation";
 
@@ -116,7 +116,7 @@ const ReservationForm = ({ edit }) => {
                   name="table_id"
                   value={table.id}
                   onChange={handleChange}
-                  defaultChecked={edit ? table.id === formData.table_id : false}
+                  checked={edit ? table.id === formData.table_id : false}
                 />
                 {table.table_number}
               </label>
@@ -124,7 +124,12 @@ const ReservationForm = ({ edit }) => {
           </div>
         </div>
         <br />
-        <input type="datetime-local" name="time" onChange={handleChange} />
+        <input
+          type="datetime-local"
+          name="time"
+          value={formatTime(formData.time)}
+          onChange={handleChange}
+        />
         <button>{edit ? "EDIT" : "Create"}</button>
       </form>
       {edit && (

@@ -23,7 +23,7 @@
 #
 class Admin < ApplicationRecord
   has_secure_password
-  belongs_to :restaurant
+  belongs_to :restaurant, dependent: :destroy
   validates :username, presence: true, uniqueness: true
   validates :password, presence: true
 end

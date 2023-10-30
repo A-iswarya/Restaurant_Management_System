@@ -93,7 +93,9 @@ const Reservations = () => {
                   <td>{new Date(reservation.time).toLocaleString()}</td>
                   {viewOnly.current ? null : (
                     <td>
-                      <Link to={`/reservations/${reservation.id}/edit`}>
+                      <Link
+                        to={`/reservations/${reservation.id}/edit?restaurant_id=${restaurantId.current}`}
+                      >
                         Edit
                       </Link>
                     </td>
