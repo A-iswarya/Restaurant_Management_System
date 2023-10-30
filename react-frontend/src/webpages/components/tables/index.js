@@ -80,7 +80,7 @@ const Tables = () => {
         setError(error);
       }
     }
-    if (!updateStatus) fetchStaff();
+    if (!updateStatus.current) fetchStaff();
   }, []);
 
   const handleStatusChange = (e, tableId) => {
