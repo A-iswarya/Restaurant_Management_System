@@ -100,7 +100,6 @@ const Login = () => {
             </label>
           </div>
           <div className="password-options">
-            <span className="forgot-password">Forgot Password?</span>
             <Link to={`/customer/create?restaurant_id=${restaurantId.current}`}>
               {" "}
               <span className="create-customer">Register</span>

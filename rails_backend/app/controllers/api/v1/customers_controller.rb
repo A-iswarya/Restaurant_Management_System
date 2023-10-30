@@ -9,7 +9,6 @@ module Api
 
       def index
         @customers = Customer.all
-        @customers = @customers.where(table_id: params[:table_id]) if params[:table_id].present?
         render json: @customers
       end
 
@@ -58,7 +57,7 @@ module Api
       private
 
       def customer_params
-        params.permit(:name, :username, :email, :phone_number, :password, :table_id)
+        params.permit(:name, :username, :email, :phone_number, :password)
       end
 
       def find_customer

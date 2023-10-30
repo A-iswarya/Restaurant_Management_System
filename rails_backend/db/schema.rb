@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_29_144608) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_30_103518) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -32,10 +32,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_29_144608) do
     t.string "email"
     t.string "phone_number"
     t.string "password_digest", null: false
-    t.uuid "table_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["table_id"], name: "index_customers_on_table_id"
   end
 
   create_table "feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -142,7 +140,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_29_144608) do
   end
 
   add_foreign_key "admins", "restaurants"
-  add_foreign_key "customers", "tables"
   add_foreign_key "feedbacks", "customers"
   add_foreign_key "feedbacks", "restaurants"
   add_foreign_key "menu_orders", "menus"
