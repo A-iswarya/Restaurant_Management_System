@@ -98,10 +98,14 @@ const Orders = () => {
   return (
     <Layout>
       <div className="staffs-container">
-        <h1>Manage Orders</h1>
-        <button className="add-staff-button" onClick={handleAddButtonClick}>
-          Add Order
-        </button>
+        <h1>
+          {updateStatus.current ? "Update Order Status" : "Manage Orders"}
+        </h1>
+        {updateStatus.current ? null : (
+          <button className="add-staff-button" onClick={handleAddButtonClick}>
+            Add Order
+          </button>
+        )}
         {error && <div className="error">{error.message}</div>}
         {isLoaded && orderData.length !== 0 && (
           <table className="staff-table">
@@ -167,7 +171,11 @@ const Orders = () => {
                         Save
                       </span>
                     ) : (
-                      <Link to={`/orders/${order.order.id}/edit`}>Edit</Link>
+                      <Link
+                        to={`/orders/${order.order.id}/edit?restaurant_id=${restaurantId.current}`}
+                      >
+                        Edit
+                      </Link>
                     )}
                   </td>
                 </tr>
