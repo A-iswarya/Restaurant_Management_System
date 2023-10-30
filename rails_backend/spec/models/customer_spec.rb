@@ -10,15 +10,6 @@
 #  username        :string           not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  table_id        :uuid
-#
-# Indexes
-#
-#  index_customers_on_table_id  (table_id)
-#
-# Foreign Keys
-#
-#  fk_rails_...  (table_id => tables.id)
 #
 require 'rails_helper'
 
