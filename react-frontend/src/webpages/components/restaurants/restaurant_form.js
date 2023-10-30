@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { GET_RESTAURANTS, GET_SINGLE_RESTAURANT } from "../../apis/api";
 import { useNavigate, useParams } from "react-router-dom";
 import DeleteRestaurant from "./delete_restaurant";
+import { getLocalStorageValue } from "../../helper";
 
 const RestaurantForm = ({ edit }) => {
   const navigate = useNavigate();
+  const userId = getLocalStorageValue("user_id");
   const { restaurantId } = useParams();
   const submitHttpCode = edit ? "PATCH" : "POST";
   const submitApi = edit
@@ -67,11 +69,18 @@ const RestaurantForm = ({ edit }) => {
         body: JSON.stringify(formData),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
+          Authorization: localStorage.token,
         },
       });
       if (response.ok) {
         const responseData = await response.json();
-        navigate(`/admin/create?restaurant_id=${responseData.data.id}`);
+        if (edit)
+          navigate(
+            `/dashboard?restaurant_id=${restaurantId}&admin_id=${userId}`
+          );
+        else {
+          navigate(`/admin/create?restaurant_id=${responseData.data.id}`);
+        }
       } else setError(`Restaurant ${edit ? "Updation" : "Creation"} Failed!`);
     } catch {
       setError("Something went wrong!");
