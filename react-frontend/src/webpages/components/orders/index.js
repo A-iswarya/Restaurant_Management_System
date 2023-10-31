@@ -88,7 +88,7 @@ const Orders = () => {
       });
       if (response.ok) {
         navigate(
-          `/orders?restaurant_id=${restaurantId.current}?update_status=true`
+          `/orders?restaurant_id=${restaurantId.current}&update_status=true`
         );
       } else setError("Status updation failed");
     } catch {

@@ -63,7 +63,7 @@ const OrderForm = ({ edit }) => {
     async function fetchTables() {
       try {
         const response = await fetch(
-          `${GET_TABLES}?restauranu_id=${restaurantId.current}`,
+          `${GET_TABLES}?restauranu_id=${restaurantId.current}&free_only=true`,
           {
             method: "GET",
             headers: {
@@ -135,7 +135,7 @@ const OrderForm = ({ edit }) => {
         (menuItem) => menuItem.id === menu.menu_id
       );
       if (!(menuItem?.length === 0)) {
-        sum += menu.quantity * menuItem.price;
+        sum += menu.quantity * menuItem?.price;
       }
     });
     return sum;

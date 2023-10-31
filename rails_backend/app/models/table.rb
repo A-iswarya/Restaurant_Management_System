@@ -27,6 +27,6 @@ class Table < ApplicationRecord
   has_many :order_tables, dependent: :destroy
   has_many :orders, through: :order_tables
   has_many :reservations, dependent: :destroy
-
+  scope :available, -> { where(status: 'free') }
   enum status: %i[free reserved occupied]
 end

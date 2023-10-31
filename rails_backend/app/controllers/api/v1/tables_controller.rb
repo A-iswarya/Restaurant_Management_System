@@ -9,6 +9,7 @@ module Api
         @tables = Table.all
         @tables = @tables.where(restaurant_id: params[:restaurant_id]) if params[:restaurant_id].present?
         @tables = @tables.where(staff_id: params[:staff_id]) if params[:staff_id].present?
+        @tables = @tables.available if params[:free_only].present?
         render json: @tables
       end
 

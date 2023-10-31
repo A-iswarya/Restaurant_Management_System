@@ -121,9 +121,11 @@ const Tables = () => {
     <Layout>
       <div className="staffs-container">
         <h1>Manage Tables</h1>
-        <button className="add-staff-button" onClick={handleAddButtonClick}>
-          Add Table
-        </button>
+        {updateStatus.current ? null : (
+          <button className="add-staff-button" onClick={handleAddButtonClick}>
+            Add Table
+          </button>
+        )}
         {error && <div className="error">{error.message}</div>}
         {isLoaded && tableData.length !== 0 && (
           <table className="staff-table">

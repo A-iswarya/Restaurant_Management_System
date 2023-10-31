@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IoRestaurantOutline } from "react-icons/io5";
 import { BiLogOut } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   getLocalStorageValue,
   GetIdFromUrl,
@@ -20,7 +20,9 @@ const Layout = ({ children }) => {
       ? GET_SINGLE_CUSTOMER(userId)
       : "";
   const navigate = useNavigate();
-  const restaurantId = useRef(GetIdFromUrl("restaurant_id"));
+  let { restaurantId } = useParams();
+  restaurantId = useRef(restaurantId || GetIdFromUrl("restaurant_id"));
+
   const [error, setError] = useState(null);
   const [userName, setUserName] = useState("");
 

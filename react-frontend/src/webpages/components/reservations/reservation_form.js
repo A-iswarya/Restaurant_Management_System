@@ -108,19 +108,32 @@ const ReservationForm = ({ edit }) => {
         </div>
         <div className="tableSection">
           <div className="checkboxes">
-            {tableData.map((table) => (
-              <label key={table.id}>
-                <input
-                  type="radio"
-                  id={table.id}
-                  name="table_id"
-                  value={table.id}
-                  onChange={handleChange}
-                  checked={edit ? table.id === formData.table_id : false}
-                />
-                {table.table_number}
-              </label>
-            ))}
+            {edit
+              ? tableData.map((table) => (
+                  <label key={table.id}>
+                    <input
+                      type="radio"
+                      id={table.id}
+                      name="table_id"
+                      value={table.id}
+                      onChange={handleChange}
+                      checked={table.id === formData.table_id}
+                    />
+                    {table.table_number}
+                  </label>
+                ))
+              : tableData.map((table) => (
+                  <label key={table.id}>
+                    <input
+                      type="radio"
+                      id={table.id}
+                      name="table_id"
+                      value={table.id}
+                      onChange={handleChange}
+                    />
+                    {table.table_number}
+                  </label>
+                ))}
           </div>
         </div>
         <br />

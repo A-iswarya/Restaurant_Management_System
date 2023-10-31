@@ -23,16 +23,16 @@ const Dashboard = () => {
   if (userType === "Admin")
     cards = [
       <Card
-        key={"Manage Menu"}
-        icon={<TfiLayoutMenuV />}
-        title={"Manage Menu"}
-        navigateTo={`/menus?restaurant_id=${restaurantId.current}`}
-      />,
-      <Card
         key={"Manage Staffs"}
         icon={<MdOutlineManageAccounts />}
         title={"Manage Staffs"}
         navigateTo={`/staffs?restaurant_id=${restaurantId.current}`}
+      />,
+      <Card
+        key={"Manage Menu"}
+        icon={<TfiLayoutMenuV />}
+        title={"Manage Menu"}
+        navigateTo={`/menus?restaurant_id=${restaurantId.current}`}
       />,
       <Card
         key={"Manage Tables"}

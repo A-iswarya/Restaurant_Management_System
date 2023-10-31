@@ -133,9 +133,7 @@ const Form = ({ edit, isAdmin, isStaff, isCustomer }) => {
               `/dashboard?restaurant_id=${restaurantId.current}&staff_id=${responseData.data.id}`
             );
           } else {
-            navigate(
-              `/dashboard?restaurant_id=${restaurantId.current}&admin_id=${userId}`
-            );
+            navigate(`/staffs?restaurant_id=${restaurantId.current}`);
           }
         } else if (isCustomer) {
           if (!edit) {
